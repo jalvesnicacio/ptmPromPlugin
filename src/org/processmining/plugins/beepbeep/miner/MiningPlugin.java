@@ -1,5 +1,6 @@
 package org.processmining.plugins.beepbeep.miner;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import org.deckfour.uitopia.api.event.TaskListener.InteractionResult;
@@ -18,6 +19,8 @@ import org.processmining.framework.plugin.annotations.PluginVariant;
 import org.processmining.framework.plugin.events.Logger.MessageLevel;
 import org.processmining.models.beepbeep.BeepbeepModel;
 
+import ca.uqac.lif.cep.tmf.QueueSource;
+
 /**
  * Mining plug-in that mines an event log for a workshop model.
  * 
@@ -32,15 +35,28 @@ import org.processmining.models.beepbeep.BeepbeepModel;
 public class MiningPlugin {
 	
 	/**
-	 * Teste de integração do Beepbeep - 3
+	 * Beepbeep integration test - 3
+	 * @throws IOException 
 	 */
-//	@UITopiaVariant(affiliation = "UQAC", author = "Jalves Nicacio", email = "jalves.nicacio@gmail.com")
-//	@PluginVariant(variantLabel = "Integration test of Beepbeep", requiredParameterLabels = {})
-//	public String beepBeepTest(PluginContext context) {
-//		QueueSource q = new QueueSource();
-//		q.setEvents("foo");
-//		return (String) q.getPullableOutput().pull();
-//	}
+	@UITopiaVariant(affiliation = "UQAC", author = "Jalves Nicacio", email = "jalves.nicacio@gmail.com")
+	@PluginVariant(variantLabel = "Integration test of Beepbeep", requiredParameterLabels = {})
+	public String beepBeepTest(UIPluginContext context) throws IOException {
+		QueueSource q = new QueueSource();
+		q.setEvents("foo");
+		
+		/*
+		 * GUI test
+		 */
+		BeepbeepMiningParameters parameters = new BeepbeepMiningParameters();
+		FooBeepbeepDialog dialog = new FooBeepbeepDialog();
+		InteractionResult result = context.showWizard("BeepBeep Data Mining Wizard Plugin", true, true, dialog);
+		if (result != InteractionResult.FINISHED) {
+			return null;
+		}
+		//return mineParameters(context, log, parameters);
+		
+		return (String) q.getPullableOutput().pull();
+	}
 
 	/**
 	 * Mining using default parameter values.
@@ -74,7 +90,7 @@ public class MiningPlugin {
 	public BeepbeepModel mineDefault(UIPluginContext context, XLog log) {
 		BeepbeepMiningParameters parameters = new BeepbeepMiningParameters();
 		BeepbeepMiningDialog dialog = new BeepbeepMiningDialog(log, parameters);
-		InteractionResult result = context.showWizard("Beepbeep PatTheMiner", true, true, dialog);
+		InteractionResult result = context.showWizard("Test of GUI for PatTheMiner Palette Plugin", true, true, dialog);
 		if (result != InteractionResult.FINISHED) {
 			return null;
 		}

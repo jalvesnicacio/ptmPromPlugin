@@ -35,12 +35,12 @@ public class BeepbeepMiningDialog extends JPanel{
 		setLayout(new TableLayout(size));
 
 		/*
-		 * Put a meaningful text in the top row.
+		 * Put a meaningful text in the top row. ---> Row 0
 		 */
 		add(SlickerFactory.instance().createLabel("<html><h2>Select mining parameters</h2>"), "0, 0");
 
 		/*
-		 * Put a list containing all available classifiers in the bottom row.
+		 * Put a list containing all available classifiers in the bottom row. --> Row 01
 		 */
 		Object classifiers[] = log.getClassifiers().toArray();
 
@@ -57,12 +57,34 @@ public class BeepbeepMiningDialog extends JPanel{
 				parameters.setClassifier((XEventClassifier) classifierList.getSelectedValue());
 			}
 		});
+		
+		/*
+		 * Tentativa de substituir por combobox:
+		 */
+		
+//		final JComboBox<?> classifierCombo = new JComboBox(classifiers);
+//		classifierCombo.setName("Select classifier");
+//		classifierCombo.addItemListener(new ItemListener() {
+//			
+//			public void itemStateChanged(ItemEvent e) {
+//				// TODO Auto-generated method stub
+//				parameters.setClassifier((XEventClassifier) classifierCombo.getSelectedItem()); 
+//			}
+//		});
+		
+		/*
+		 * 
+		 */
+		
 		JScrollPane classifierScrollPane = new javax.swing.JScrollPane();
+		
 		SlickerDecorator.instance().decorate(classifierScrollPane, SlickerColors.COLOR_BG_3, SlickerColors.COLOR_FG,
 				SlickerColors.COLOR_BG_1);
+		
 		classifierScrollPane.setPreferredSize(new Dimension(250, 300));
 		classifierScrollPane.setViewportView(classifierList);
 		add(classifierScrollPane, "0, 1");
+	//	add(classifierCombo, "0,2");
 	}
 
 }

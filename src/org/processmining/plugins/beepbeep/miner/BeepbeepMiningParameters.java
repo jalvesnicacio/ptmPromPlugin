@@ -38,9 +38,28 @@ public class BeepbeepMiningParameters {
 	 *            The given classifier.
 	 */
 	public void setClassifier(XEventClassifier selectedValue) {
-		if (classifier != null) {
+		if (this.classifier != null) {
 			this.classifier = classifier;
 		}
+	}
+	
+	/**
+	 * Returns whether these parameter values are equal to the given parameter
+	 * values.
+	 * 
+	 * @param object
+	 *            The given parameter values.
+	 * @return Whether these parameter values are equal to the given parameter
+	 *         values.
+	 */
+	public boolean equals(Object object) {
+		if (object instanceof BeepbeepMiningParameters) {
+			BeepbeepMiningParameters parameters = (BeepbeepMiningParameters) object;
+			if (this.classifier.equals(parameters.classifier)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
