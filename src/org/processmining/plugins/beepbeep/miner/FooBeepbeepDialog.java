@@ -79,8 +79,10 @@ public class FooBeepbeepDialog extends JPanel {
 		this.tabbedPane = new IconVerticalTabbedPane(new Color(230, 230, 230, 210), new Color(20, 20, 20, 160));
 		add(tabbedPane, BorderLayout.CENTER);
 
-		/*
+		/* ========================================
+		 * PANEL 1:
 		 * Pattern Panel
+		 * ==========================================
 		 */
 		URL url = getClass().getResource("/org/processmining/plugins/beepbeep/miner/icons/patternIcon.png");
 		BufferedImage patternIcon = ImageIO.read(new File(url.getFile()));

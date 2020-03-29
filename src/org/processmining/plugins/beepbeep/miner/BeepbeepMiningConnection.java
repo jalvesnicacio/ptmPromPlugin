@@ -1,8 +1,8 @@
 package org.processmining.plugins.beepbeep.miner;
 
 import org.deckfour.xes.model.XLog;
-import org.processmining.models.beepbeep.BeepbeepModel;
-import org.processmining.models.beepbeep.connections.AbstractBeepbeepModelConnection;
+import org.processmining.plugins.beepbeep.miner.connections.AbstractBeepbeepModelConnection;
+import org.processmining.plugins.beepbeep.miner.models.BeepbeepBPMModel;
 
 public class BeepbeepMiningConnection extends AbstractBeepbeepModelConnection<BeepbeepMiningParameters>{
 
@@ -12,7 +12,7 @@ public class BeepbeepMiningConnection extends AbstractBeepbeepModelConnection<Be
 	 * @param model The given workshop model.
 	 * @param parameters The given conversion parameters.
 	 */
-	public BeepbeepMiningConnection(XLog log, BeepbeepModel model, BeepbeepMiningParameters parameters) {
+	public BeepbeepMiningConnection(XLog log, BeepbeepBPMModel model, BeepbeepMiningParameters parameters) {
 		super(log, model, parameters);
 	}
 
