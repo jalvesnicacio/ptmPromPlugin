@@ -2,6 +2,8 @@ package org.processmining.plugins.beepbeep.miner;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
+import java.util.Queue;
 
 import org.deckfour.xes.classification.XEventClassifier;
 import org.deckfour.xes.info.XLogInfo;
@@ -18,12 +20,22 @@ import org.processmining.framework.util.ui.wizard.ProMWizardDisplay;
 import org.processmining.plugins.beepbeep.miner.models.BeepbeepBPMModel;
 import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
 import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel.TrendReference;
+import org.processmining.plugins.beepbeep.miner.models.Trace;
 import org.processmining.plugins.beepbeep.miner.views.DistanceStep;
 import org.processmining.plugins.beepbeep.miner.views.PatternStep;
 import org.processmining.plugins.beepbeep.miner.views.SummaryStep;
 import org.processmining.plugins.beepbeep.miner.views.ThresholdStep;
 import org.processmining.plugins.beepbeep.miner.views.TrendStep;
 import org.processmining.plugins.beepbeep.miner.views.WindowsStep;
+
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.peg.TrendDistance;
+import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.util.Numbers;
 
 
 /**
@@ -126,29 +138,79 @@ public class PTMinerPlugin {
 	 */
 	private BeepbeepBPMModel mine(PluginContext context, XLog log, PTMSettingModel settingsModel) {
 		
+		//
 		BeepbeepBPMModel model = settingsModel.getBpmModel();
+		List<Trace> traces = model.getTraceInstances();
 		
 		TrendReference pattern = settingsModel.getTrendReference();
+		int window = settingsModel.getPresentWindow();
+		Processor beta = settingsModel.executeTrendFunction();
+		Function delta = Numbers.subtraction;
+		Float d = settingsModel.getThresholdValue();
+		BinaryFunction<Number, Number, Boolean> comp = settingsModel.getThresholdFunction();		
 		
-		//Create a TrendDistance Processor
+		/************************************************************************
+		Create a TrendDistance Processor
 		//<P> The type of the pattern | 
 		//<Q> The type returned by the beta processor | 
 		//<R> The type returned by the distance function
 		
-		/*
-		 
+		public TrendDistance(java.lang.Object pattern, 
+		   					 int n, 
+		   					 ca.uqac.lif.cep.Processor beta, 
+		   					 ca.uqac.lif.cep.functions.Function delta, 
+		   					 java.lang.Object d, 
+		   					 ca.uqac.lif.cep.functions.BinaryFunction comp);
+		*************************************************************************/
 		 
 		TrendDistance<TrendReference, TrendReference, Number> td		
 		= new TrendDistance<TrendReference, TrendReference, Number>(
 			      pattern, 									// Reference trend
-			      settingsModel.getPresentWindow(), 		// Window width
-			      settingsModel.executeTrendOption(), 		// beta-processor 
-			      Numbers.subtraction, 						// distance metric
-			      0, 										// distance threshold
-			      Numbers.isGreaterOrEqual 					// comparison function
+			      window,							 		// Window width
+			      beta, 									// beta-processor 
+			      delta, 									// distance metric
+			      d, 										// distance threshold
+			      comp 										// comparison function
 			      );
+		QueueSink qs = new QueueSink();
+		Queue<Object> queue = qs.getQueue();
+		Connector.connect(td,qs);
+		Pushable p = td.getPushableInput();
+		
+		for (Trace trace : traces) {
+			p.push(trace);
+			Object obj = queue.remove();
+			System.out.println(obj);
+		}
+		
+		/**
+		 * 
+		 * Ex
+		 * 
+		 * new TrendDistance<TrendReference, TrendReference, Number>(
+			      500, 									// Reference trend
+			      2,							 		// Window width
+			      runningAverage, 									// beta-processor 
+			      manhattanDistance, 									// distance metric
+			      550, 										// distance threshold
+			      lessThan 										// comparison function
+			      );
+			      
+			      
+		
+		Questions:
+		1) como aplicar beta em um trace?
+		2) como extrair pattern de TrendReference?
+		
+		Exemplos de tendências:
+		1) Qual a duração de um trace?
+		2) Quantas vezes uma atividade é executada dentro de um trace?
+		3) Quanto custa um trace?
+		
+		as funções aplicadas em Beta são utilizadas sobre os eventos dentro do trace.
 		
 		*/
+		
 		//-----------------------------------------------
 		
 		

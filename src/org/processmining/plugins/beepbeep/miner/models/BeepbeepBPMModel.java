@@ -1,10 +1,8 @@
 package org.processmining.plugins.beepbeep.miner.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.deckfour.xes.info.XLogInfo;
@@ -22,27 +20,28 @@ import org.processmining.framework.util.HTMLToString;
  */
 
 public class BeepbeepBPMModel implements HTMLToString{
-	private List<TraceInstance> traceInstances = new ArrayList<TraceInstance>();
+	private List<Trace> traceInstances = new ArrayList<Trace>();
+	
 	
 
 	public BeepbeepBPMModel(XLogInfo info) {
 		for (XTrace trace : info.getLog()) {
-			TraceInstance ti = new TraceInstance(trace);
+			Trace ti = new Trace(trace);
 			this.traceInstances.add(ti);
 		}
 	}
 	
-	public List<TraceInstance> getTraceInstances(){
+	public List<Trace> getTraceInstances(){
 		return this.traceInstances;
 	}
 
 	public List<String>getEventAttributes(){
 		List<String> elements = new ArrayList<String>();
-		HashMap<Integer, XEvent> events = getTraceInstances().get(0).getEvents();
-		Iterator<Entry<Integer, XEvent>> evit = events.entrySet().iterator();
+		List<Event> events = getTraceInstances().get(0).getEvents();
+		Iterator<Event> evit = events.iterator();
 		if(evit.hasNext()) {
 			int i = 0;
-			XEvent event = evit.next().getValue();
+			XEvent event = evit.next().getxEvent();
 			XAttributeMap attributes = event.getAttributes();
 			Set<String> keys = attributes.keySet();
 			keys.forEach((String name) -> {
@@ -53,7 +52,7 @@ public class BeepbeepBPMModel implements HTMLToString{
 	}
 
 	private void print() {
-		for (TraceInstance ti : traceInstances) {
+		for (Trace ti : traceInstances) {
 			System.out.println("======= TRACE ======");
 			System.out.println(ti.getStringOfXEvents(ti.getEvents()));
 			System.out.println("====================");

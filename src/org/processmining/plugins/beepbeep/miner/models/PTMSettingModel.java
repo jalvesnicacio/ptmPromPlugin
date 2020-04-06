@@ -4,6 +4,7 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
+import ca.uqac.lif.cep.util.Numbers;
 
 public class PTMSettingModel {
 	
@@ -100,21 +101,23 @@ public class PTMSettingModel {
 	public float getThresholdValue() {
 		return this.thresholdValue;
 	}
+	public BinaryFunction<Number, Number, Boolean> getThresholdFunction() {
+		//Numbers.isGreaterOrEqual 	
+		if (this.thresholdOption == "Smaller than") {
+			return Numbers.isLessThan;
+		}else {
+			return Numbers.isGreaterOrEqual;
+		}
+	}
 	
 	
 	
-	public Processor executeTrendOption() {
+	
+	public Processor executeTrendFunction() {
 		switch (this.trendChoice) {
 			case "cumulativeSum" :
-				BinaryFunction<Number, Number, Number> bf = new BinaryFunction<Number, Number, Number>(Number.class, Number.class, Number.class) {
-
-					public Number getValue(Number arg0, Number arg1) {
-						// TODO Auto-generated method stub
-						return (int)arg0 + (int)arg1;
-					}
-				};
-				CumulativeFunction<Number> cf = new CumulativeFunction<Number>(bf);
-				Cumulate cumulativeSum = new Cumulate(cf);
+				Cumulate cumulativeSum = new Cumulate(
+						new CumulativeFunction<Number>(Numbers.addition));
 				return cumulativeSum;
 			default :
 				break;
@@ -124,13 +127,11 @@ public class PTMSettingModel {
 	}
 
 	
-	
-	
-	/**
+	/***************************************************************************
 	 * Class TrendReference
 	 * @author jalves
 	 *
-	 */
+	 ****************************************************************************/
 	public static class TrendReference{
 		public enum DataMiningPattern {
 			SELF_CORRELATED,
