@@ -3,7 +3,6 @@ package org.processmining.plugins.beepbeep.miner;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Queue;
 
 import org.deckfour.xes.classification.XEventClassifier;
 import org.deckfour.xes.info.XLogInfo;
@@ -19,8 +18,9 @@ import org.processmining.framework.util.ui.wizard.ListWizard;
 import org.processmining.framework.util.ui.wizard.ProMWizardDisplay;
 import org.processmining.plugins.beepbeep.miner.models.BeepbeepBPMModel;
 import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
-import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel.TrendReference;
 import org.processmining.plugins.beepbeep.miner.models.Trace;
+import org.processmining.plugins.beepbeep.miner.models.TrendReference;
+import org.processmining.plugins.beepbeep.miner.processors.Beta;
 import org.processmining.plugins.beepbeep.miner.views.DistanceStep;
 import org.processmining.plugins.beepbeep.miner.views.PatternStep;
 import org.processmining.plugins.beepbeep.miner.views.SummaryStep;
@@ -30,11 +30,11 @@ import org.processmining.plugins.beepbeep.miner.views.WindowsStep;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.peg.TrendDistance;
-import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.Numbers;
 
 
@@ -126,7 +126,6 @@ public class PTMinerPlugin {
 		}
 
 		context.addConnection(new BeepbeepMiningConnection(log, bpmModel, parameters));
-
 		return bpmModel;
 	}	
 
@@ -138,14 +137,14 @@ public class PTMinerPlugin {
 	 */
 	private BeepbeepBPMModel mine(PluginContext context, XLog log, PTMSettingModel settingsModel) {
 		
-		//
+		//Sources:
 		BeepbeepBPMModel model = settingsModel.getBpmModel();
 		List<Trace> traces = model.getTraceInstances();
 		
-		TrendReference pattern = settingsModel.getTrendReference();
+		TrendReference pattern = settingsModel.getTrendReference(); //Question: how can trendDistance read the information from here?
 		int window = settingsModel.getPresentWindow();
-		Processor beta = settingsModel.executeTrendFunction();
-		Function delta = Numbers.subtraction;
+		Processor beta  = new Beta(settingsModel.getElementTrendOption(), settingsModel.getTrendProcessor());
+		Function delta = Numbers.subtraction; // Falta fazer o grupo de processadores
 		Float d = settingsModel.getThresholdValue();
 		BinaryFunction<Number, Number, Boolean> comp = settingsModel.getThresholdFunction();		
 		
@@ -163,25 +162,52 @@ public class PTMinerPlugin {
 		   					 ca.uqac.lif.cep.functions.BinaryFunction comp);
 		*************************************************************************/
 		 
-		TrendDistance<TrendReference, TrendReference, Number> td		
-		= new TrendDistance<TrendReference, TrendReference, Number>(
-			      pattern, 									// Reference trend
+		TrendDistance<Number, Number, Number> td		
+		= new TrendDistance<Number, Number, Number>(
+			      200, 									// Reference trend
 			      window,							 		// Window width
 			      beta, 									// beta-processor 
 			      delta, 									// distance metric
 			      d, 										// distance threshold
 			      comp 										// comparison function
 			      );
-		QueueSink qs = new QueueSink();
-		Queue<Object> queue = qs.getQueue();
-		Connector.connect(td,qs);
-		Pushable p = td.getPushableInput();
 		
-		for (Trace trace : traces) {
-			p.push(trace);
-			Object obj = queue.remove();
-			System.out.println(obj);
+		QueueSource qs = new QueueSource();
+		qs.loop(false);
+		//qs.setEvents(queue);
+		
+		//QueueSink qs = new QueueSink();
+		//Queue<Object> queue = qs.getQueue();
+		
+		Connector.connect(qs,td);
+		Pullable p = td.getPullableOutput();
+		
+		for (Trace trc : traces) {
+			Object[] events = trc.getEvents().toArray();
+			qs.setEvents(events);
+			while(p.hasNext()) {
+				Boolean dvt = (Boolean) p.pull();
+				System.out.println(dvt);
+			}
+			
+			
+//			for (Event evt : trc.getEvents()) {
+//				p.push(evt);
+//				Boolean obj = (Boolean) queue.remove();
+//				evt.addResult(pattern, obj); //*** Precisa trocar o pattern pelo resultado do Beta!!
+//			}
 		}
+		
+		
+//		Trace trace = traces.get(0);
+//		Object[] events = trace.getEvents().toArray();
+//		p.push((Event)events[0]);
+//		Object obj = queue.remove();
+//		System.out.println(obj);
+//		
+		
+		
+		
 		
 		/**
 		 * 

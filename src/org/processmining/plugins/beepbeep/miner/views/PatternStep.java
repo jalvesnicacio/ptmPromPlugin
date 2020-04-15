@@ -4,7 +4,7 @@ import javax.swing.JComponent;
 
 import org.processmining.framework.util.ui.wizard.ProMWizardStep;
 import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
-import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel.TrendReference;
+import org.processmining.plugins.beepbeep.miner.models.TrendReference;
 
 public class PatternStep implements ProMWizardStep<PTMSettingModel> {
 	

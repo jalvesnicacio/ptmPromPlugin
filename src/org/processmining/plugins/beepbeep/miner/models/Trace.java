@@ -9,8 +9,8 @@ import org.deckfour.xes.model.XAttribute;
 import org.deckfour.xes.model.XAttributeMap;
 import org.deckfour.xes.model.XEvent;
 import org.deckfour.xes.model.XTrace;
-import org.processmining.plugins.beepbeep.miner.models.functions.TimeMinusFunction;
-import org.processmining.plugins.beepbeep.miner.models.functions.TimestampFunction;
+import org.processmining.plugins.beepbeep.miner.functions.TimeMinusFunction;
+import org.processmining.plugins.beepbeep.miner.functions.TimestampFunction;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
@@ -33,19 +33,12 @@ public class Trace {
 	 */
 	public Trace(XTrace trace) {
 		this.traceAttributes = trace.getAttributes();
-		this.events = new ArrayList(); 
+		this.events = new ArrayList<Event>(); 
 		
 		for (XEvent xEvent : trace) {
 			Event ev = new Event(xEvent);
 			this.events.add(ev);
 		}
-		
-		//int i = getPeriodInDays("time:timestamp");	
-		//System.out.println("Trace period in Days: " + i);		
-	}
-	
-	public Object getElement(String fielName) {
-		return null;
 	}
 	
 	public int getPeriodInDays(String fieldName) {
@@ -107,31 +100,6 @@ public class Trace {
 		return info;
 	}
 	
-	/**
-	 * Creates a string with information about all elements of event
-	 * @param <T>
-	 * @param events
-	 * @return
-	 */
-	public StringBuilder getStringOfXEvents(List<Event> events){
-		Iterator<Event> evit = events.iterator();
-		StringBuilder info = new StringBuilder("");
-		
-		while(evit.hasNext()){
-			Event xee = evit.next();
-			XEvent xe = xee.getxEvent();
-			
-			info.append("-- Event Info --"+"\n");
-
-			//handling event's attributes
-			XAttributeMap xattmap = xe.getAttributes();
-			info.append(getStringOfXAttributeMap("\t", xattmap));
-			//END OF handling event's attributes
-			info.append("----\n");
-		}
-		
-		return 	info;
-	}
 	
 	/**
 	 * getEvents
@@ -142,14 +110,23 @@ public class Trace {
 	}
 	
 	/**
-	 * 
-	 * @return a String
+	 * toString
+	 * @return the trace
 	 */
-	public StringBuilder printTraceAttributes() {
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb = getStringOfXAttributeMap("\t", this.traceAttributes);
-		return sb;
+		sb.append(" ------ TRACE ------\n");
+		sb.append(getStringOfXAttributeMap("\t", this.traceAttributes));
+		this.events.forEach(evt->{
+			sb.append("-- Event Info --"+"\n");
+			sb.append(evt.toString());
+			sb.append("----\n");
+		});
+		
+		return sb.toString();
 	}
+	
+	
 	
 	
 }

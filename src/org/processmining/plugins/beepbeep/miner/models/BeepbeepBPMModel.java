@@ -12,9 +12,7 @@ import org.deckfour.xes.model.XTrace;
 import org.processmining.framework.util.HTMLToString;
 
 /**
- * OBS.: É possível utilizar as funções compute, computeifAbsent e conputeifPresent nos atributos de XEvent e XTrace. 
- * 		Essas funções utilizam o recurso de BiFunction para implementação de funções genéricas, para qualquer tipo de 
- * 		variável e objetos.
+ * 
  * @author jalves
  *
  */
@@ -35,7 +33,7 @@ public class BeepbeepBPMModel implements HTMLToString{
 		return this.traceInstances;
 	}
 
-	public List<String>getEventAttributes(){
+	public List<String>getAllKeys(){
 		List<String> elements = new ArrayList<String>();
 		List<Event> events = getTraceInstances().get(0).getEvents();
 		Iterator<Event> evit = events.iterator();
@@ -53,11 +51,8 @@ public class BeepbeepBPMModel implements HTMLToString{
 
 	private void print() {
 		for (Trace ti : traceInstances) {
-			System.out.println("======= TRACE ======");
-			System.out.println(ti.getStringOfXEvents(ti.getEvents()));
-			System.out.println("====================");
+			System.out.println(ti.toString());
 		}
-		
 	}
 
 
@@ -66,9 +61,40 @@ public class BeepbeepBPMModel implements HTMLToString{
 		if (includeHTMLTags) {
 			buffer.append("<html>");
 		}
-		buffer.append("<table>");
-		buffer.append("<tr>");
-		buffer.append("<td>Mining results goes here... come soon</td>");
+		buffer.append("<table border='1'>");
+		
+		
+		for (Trace trace : traceInstances) {
+			buffer.append("<tr>");
+			buffer.append("<th colspan='3'>Trace</th></tr>");
+			
+			for (Event evt : trace.getEvents()) {
+				buffer.append("<tr>");
+				
+				buffer.append("<td>");
+				buffer.append(evt.toString());
+				buffer.append("</td>");
+				
+				buffer.append("<td>");
+				buffer.append("Computing Trend");
+				buffer.append("</td>");
+				
+				buffer.append("<td>");
+				buffer.append(evt.getDeviation());
+				buffer.append("</td>");
+				
+				buffer.append("</tr>");
+			}
+			
+		}
+		buffer.append("</table>");
+		if (includeHTMLTags) {
+			buffer.append("</html>");
+		}
+		return buffer.toString();
+		
+		
+		
 		
 		/*
 		 * Head line:
@@ -78,7 +104,6 @@ public class BeepbeepBPMModel implements HTMLToString{
 		}
 		*/
 		
-		buffer.append("</tr>");
 		
 		/*
 		for (XEventClass fromEventClass : getEventClasses()) {
@@ -91,11 +116,7 @@ public class BeepbeepBPMModel implements HTMLToString{
 		}
 		*/
 		
-		buffer.append("</table>");
-		if (includeHTMLTags) {
-			buffer.append("</html>");
-		}
-		return buffer.toString();
+		
 	}
 	
 		 

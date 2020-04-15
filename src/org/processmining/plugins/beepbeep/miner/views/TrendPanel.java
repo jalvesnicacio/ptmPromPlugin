@@ -20,7 +20,7 @@ public class TrendPanel extends BeepBeepView {
 	
 	
 	private static final long serialVersionUID = 1L;
-	private ProMComboBox<String> elementsCbBox;
+	private ProMComboBox<String> attributesCbBox;
 	private JRadioButton directValueRBtn, otherRBtn;
 	private JRadioButton runningAverageRBtn, vectorMomentsRBtn, distinctOccurrencesRBtn, valueDistributionRBtn, cumulativeSumRBtn;
 	
@@ -36,7 +36,7 @@ public class TrendPanel extends BeepBeepView {
 				"Trend Configuration");
 		
 		final JPanel trendElementOPtPanel = createPanel(null, false, BoxLayout.Y_AXIS);
-		final List<String> elements = ptmSettingModel.getBpmModel().getEventAttributes();		
+		final List<String> elements = ptmSettingModel.getBpmModel().getAllKeys();		
 		
 		/*--------------------------------------------------------------------------------------
 		 * elementOptions:
@@ -45,16 +45,17 @@ public class TrendPanel extends BeepBeepView {
 		final ButtonGroup elementOptionsBtnGp = new ButtonGroup();
 		elementOptions.setAlignmentX(LEFT_ALIGNMENT);
 		directValueRBtn = createRadioButton(elementOptions, elementOptionsBtnGp, "Direct Value ");
-		directValueRBtn.setSelected(true);
+		//directValueRBtn.setSelected(true);
 		
-		elementsCbBox = new ProMComboBox<String>(elements);
+		attributesCbBox = new ProMComboBox<String>(elements);
 		otherRBtn = createRadioButton(elementOptions, elementOptionsBtnGp, "Other");
+		otherRBtn.setSelected(true);
 		elementOptions.add(Box.createHorizontalStrut(10));
-		elementOptions.add(elementsCbBox);
+		elementOptions.add(attributesCbBox);
 		
 		createLabel(trendElementOPtPanel, "Select the element of each event to use for computing the trend:", new Dimension(450,40),false,"left");
 		
-		elementsCbBox.addActionListener(new ActionListener() {
+		attributesCbBox.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				otherRBtn.setSelected(true);
@@ -79,7 +80,6 @@ public class TrendPanel extends BeepBeepView {
 		runningAverageRBtn = createRadioButton(panel, trendChoiceBtnGp, "Running Average ");
 		runningAverageRBtn.setSelected(true);
 		createTxtPane(panel,"The average of stream over the entire window", new Dimension(450,30), true, false, Component.LEFT_ALIGNMENT);
-		//runningAverageLabel.setBorder(BorderFactory.createLineBorder(Color.cyan, 1));
 		
 		vectorMomentsRBtn = createRadioButton(panel, trendChoiceBtnGp, "Vector of Moments ");
 		createTxtPane(panel,"The average n first statistical moments over the entire window", new Dimension(450,30), true, false, Component.LEFT_ALIGNMENT);
@@ -115,7 +115,7 @@ public class TrendPanel extends BeepBeepView {
 			return "directValue";
 		}
 		if(otherRBtn.isSelected()) {
-			return (String) elementsCbBox.getSelectedItem();
+			return (String) attributesCbBox.getSelectedItem();
 		}
 		
 		return "";

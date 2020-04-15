@@ -1,9 +1,13 @@
 package org.processmining.plugins.beepbeep.miner.models;
 
-import ca.uqac.lif.cep.Processor;
+import org.processmining.plugins.beepbeep.miner.processors.BetaCumulate;
+import org.processmining.plugins.beepbeep.miner.processors.BetaDistinctOccurences;
+import org.processmining.plugins.beepbeep.miner.processors.BetaRunningAverage;
+import org.processmining.plugins.beepbeep.miner.processors.BetaRunningMoments;
+import org.processmining.plugins.beepbeep.miner.processors.BetaValueDistribution;
+import org.processmining.plugins.beepbeep.miner.processors.TrendProcessor;
+
 import ca.uqac.lif.cep.functions.BinaryFunction;
-import ca.uqac.lif.cep.functions.Cumulate;
-import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.util.Numbers;
 
 public class PTMSettingModel {
@@ -11,7 +15,6 @@ public class PTMSettingModel {
 	private BeepbeepBPMModel bpmModel;
 	private TrendReference trendReference;
 	private int pastWindow, presentWindow;
-	private String elementTrendOption, trendChoice;
 	private String distance, thresholdOption;
 	float thresholdValue;
 	
@@ -34,7 +37,6 @@ public class PTMSettingModel {
 	}
 	
 	//Trend Reference:
-	
 	public TrendReference getTrendReference() {
 		return this.trendReference;
 	}
@@ -44,7 +46,6 @@ public class PTMSettingModel {
 	}
 	
 	//Past and Present Windows
-	
 	public void setPastWindow(int pastwindow) {
 		this.pastWindow = pastwindow;
 	}
@@ -63,20 +64,19 @@ public class PTMSettingModel {
 	
 	//Trend Option
 	public void setElementTrendOption(String elementTrendOption) {
-		this.elementTrendOption = elementTrendOption;	
+		this.trendReference.setAttributeName(elementTrendOption); 	
 	}
 
 	public void setTrendChoice(String trendChoice) {
-		this.trendChoice = 	trendChoice;	
+		this.trendReference.setTrendChoice(trendChoice); 
 	}
 	
 	public String getElementTrendOption() {
-		return this.elementTrendOption;
+		return this.trendReference.getAttributeName();
 	}
 	public String getTrendChoice() {
-		return this.trendChoice;
+		return this.trendReference.getTrendChoice();
 	}
-	
 	
 	
 	
@@ -112,55 +112,29 @@ public class PTMSettingModel {
 	
 	
 	
-	
-	public Processor executeTrendFunction() {
-		switch (this.trendChoice) {
+	public TrendProcessor getTrendProcessor() {
+		TrendProcessor tp = null;
+		switch (this.trendReference.getTrendChoice()) {
 			case "cumulativeSum" :
-				Cumulate cumulativeSum = new Cumulate(
-						new CumulativeFunction<Number>(Numbers.addition));
-				return cumulativeSum;
+				tp = new BetaCumulate();
+				break;
+			case "runningAverage" :
+				tp = new BetaRunningAverage();
+				break;
+			case "vectorMoment" :
+				tp = new BetaRunningMoments(1); //falta passar argumento...
+				break;
+			case "distinctOccurrences" :
+				tp = new BetaDistinctOccurences(); // Falta terminar
+				break;
+			case "valueDistribution" :
+				tp = new BetaValueDistribution();
+				break;			
 			default :
 				break;
 		}
-		
-		return null;
+		return tp;
 	}
 
-	
-	/***************************************************************************
-	 * Class TrendReference
-	 * @author jalves
-	 *
-	 ****************************************************************************/
-	public static class TrendReference{
-		public enum DataMiningPattern {
-			SELF_CORRELATED,
-			PATTERN_BASED
-		}
-		private DataMiningPattern dataMiningPattern = DataMiningPattern.SELF_CORRELATED;
-		private Number dataMiningPatternValue;
-		
-		public TrendReference(String type, Number value) {
-			if (type == "SELF_CORRELATED") {
-				this.dataMiningPattern = DataMiningPattern.SELF_CORRELATED;
-			}else {
-				this.dataMiningPattern = DataMiningPattern.PATTERN_BASED;
-			}
-			this.dataMiningPatternValue = value;
-		}
-
-		public DataMiningPattern getDataMiningPattern() {
-			return dataMiningPattern;
-		}
-
-		public void setDataMiningPattern(DataMiningPattern dataMiningPattern) {
-			this.dataMiningPattern = dataMiningPattern;
-		}
-
-		public Number getDataMiningPatternValue() {
-			return dataMiningPatternValue;
-		}
-		
-	}
 
 }

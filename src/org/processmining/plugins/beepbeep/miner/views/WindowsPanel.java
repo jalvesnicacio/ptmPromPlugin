@@ -8,8 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.processmining.framework.util.ui.widgets.ProMTextField;
-import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel.TrendReference;
-import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel.TrendReference.DataMiningPattern;
+import org.processmining.plugins.beepbeep.miner.models.TrendReference;
+import org.processmining.plugins.beepbeep.miner.models.TrendReference.DataMiningPattern;
 
 public class WindowsPanel extends BeepBeepView {
 	
