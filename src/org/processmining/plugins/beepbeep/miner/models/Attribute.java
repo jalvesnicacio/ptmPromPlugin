@@ -26,7 +26,6 @@ public class Attribute {
 	}
 
 	
-	
 	public Attribute(XAttribute xatt) {
 		this.key = xatt.getKey();
 		this.value = xatt.toString();
@@ -36,6 +35,16 @@ public class Attribute {
 	public String toString() {
 		return "\tAttribute [key: " + this.key + "\t | value: " + this.value + "]\n";
 	}
+
+	public Object getClassName() {
+		return className;
+	}
+
+	public void setClassName(Object className) {
+		this.className = className;
+	}
+	
+	
 	
 	
 	

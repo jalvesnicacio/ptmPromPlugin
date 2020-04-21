@@ -7,6 +7,12 @@ import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 
+/**
+ * Transforms the attribute value into a string and calculates the number of repetitions of this value
+ * @author jalves
+ *
+ */
+
 public class BetaValueDistribution extends GroupProcessor implements TrendProcessor {
 	
 	public BetaValueDistribution() {

@@ -67,6 +67,7 @@ public class BeepbeepBPMModel implements HTMLToString{
 		for (Trace trace : traceInstances) {
 			buffer.append("<tr>");
 			buffer.append("<th colspan='3'>Trace</th></tr>");
+			buffer.append("<tr><th>Event</th><th>Computing Trend</th><th>Deviation Result</th>");
 			
 			for (Event evt : trace.getEvents()) {
 				buffer.append("<tr>");

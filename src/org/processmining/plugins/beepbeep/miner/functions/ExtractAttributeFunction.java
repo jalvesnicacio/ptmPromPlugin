@@ -10,6 +10,7 @@ import ca.uqac.lif.cep.functions.Function;
 
 public class ExtractAttributeFunction extends Function {
 
+	
 	@Override
 	public Class<?> getOutputTypeFor(int i) {
 		if (i == 0) {

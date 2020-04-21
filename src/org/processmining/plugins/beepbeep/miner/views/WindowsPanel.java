@@ -8,8 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.processmining.framework.util.ui.widgets.ProMTextField;
-import org.processmining.plugins.beepbeep.miner.models.TrendReference;
-import org.processmining.plugins.beepbeep.miner.models.TrendReference.DataMiningPattern;
+import org.processmining.plugins.beepbeep.miner.models.ReferenceTrend;
+import org.processmining.plugins.beepbeep.miner.models.ReferenceTrend.DataMiningPattern;
 
 public class WindowsPanel extends BeepBeepView {
 	
@@ -23,7 +23,7 @@ public class WindowsPanel extends BeepBeepView {
 	 * @param title
 	 * @throws IOException 
 	 */
-	public WindowsPanel(TrendReference trend){
+	public WindowsPanel(ReferenceTrend trend){
 		super("Windows",
 				"/org/processmining/plugins/beepbeep/miner/views/icons/windowsIcon.png", 
 				"Select the time windows for the evaluation of the pattern.");

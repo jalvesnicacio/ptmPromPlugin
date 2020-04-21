@@ -18,7 +18,7 @@ import org.ujmp.core.collections.ArrayIndexList;
 	public class Event{
 		private XEvent xEvent;
 		private List<Attribute> attributes = new ArrayIndexList<Attribute>();
-		private TrendReference ComputingTrend;
+		private ReferenceTrend ComputingTrend;
 		private Boolean deviation;
 
 		
@@ -82,12 +82,12 @@ import org.ujmp.core.collections.ArrayIndexList;
 			return null;
 		}
 		
-		public void addResult(TrendReference trend, Boolean deviation) {
+		public void addResult(ReferenceTrend trend, Boolean deviation) {
 			this.ComputingTrend = trend;
 			this.deviation = deviation;
 		}
 		
-		public TrendReference getComputingTrend() {
+		public ReferenceTrend getComputingTrend() {
 			return this.ComputingTrend;
 		}
 		
@@ -95,7 +95,7 @@ import org.ujmp.core.collections.ArrayIndexList;
 			return this.deviation;
 		}
 		
-		public void setComputingTrend(TrendReference trend) {
+		public void setComputingTrend(ReferenceTrend trend) {
 			this.ComputingTrend = trend;
 		}
 		

@@ -8,12 +8,13 @@ import org.processmining.plugins.beepbeep.miner.processors.BetaValueDistribution
 import org.processmining.plugins.beepbeep.miner.processors.TrendProcessor;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.util.Numbers;
 
 public class PTMSettingModel {
 	
 	private BeepbeepBPMModel bpmModel;
-	private TrendReference trendReference;
+	private ReferenceTrend trendReference;
 	private int pastWindow, presentWindow;
 	private String distance, thresholdOption;
 	float thresholdValue;
@@ -37,11 +38,11 @@ public class PTMSettingModel {
 	}
 	
 	//Trend Reference:
-	public TrendReference getTrendReference() {
+	public ReferenceTrend getTrendReference() {
 		return this.trendReference;
 	}
 	
-	public void setTrendReference(TrendReference trend) {
+	public void setTrendReference(ReferenceTrend trend) {
 		this.trendReference = trend;
 	}
 	
@@ -135,6 +136,26 @@ public class PTMSettingModel {
 		}
 		return tp;
 	}
+	
+	public Function getDistanceFunction() {
+		Function distanceFunction = null;
+		switch (this.distance) {
+			case "manhattanDistance" :
+				distanceFunction = null;
+				break;
+			case "euclidianDistance" :
+				distanceFunction = null;
+				break;
+			case "scalarDifference" :
+				distanceFunction = Numbers.subtraction;
+				break;
+			case "ratio" :
+			default :
+				break;
+		}
+		return distanceFunction;
+	}
+	
 
 
 }

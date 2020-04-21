@@ -4,7 +4,7 @@ import javax.swing.JComponent;
 
 import org.processmining.framework.util.ui.wizard.ProMWizardStep;
 import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
-import org.processmining.plugins.beepbeep.miner.models.TrendReference;
+import org.processmining.plugins.beepbeep.miner.models.ReferenceTrend;
 
 public class PatternStep implements ProMWizardStep<PTMSettingModel> {
 	
@@ -22,7 +22,7 @@ public class PatternStep implements ProMWizardStep<PTMSettingModel> {
 		if(component instanceof PatternPanel) {
 			PatternPanel ps =  (PatternPanel) component;
 			String pattern = ps.getPattern();
-			model.setTrendReference(new TrendReference(pattern, ps.getPatternValue()));
+			model.setTrendReference(new ReferenceTrend(pattern, ps.getPatternValue()));
 		}
 		return model;
 	}
