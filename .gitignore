@@ -55,4 +55,7 @@ jacoco.exec
 **/.cproject
 
 # PDT-specific
-**/.buildpath          
+**/.buildpath
+
+# SVN
+.svn/
