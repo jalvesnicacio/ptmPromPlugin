@@ -1,4 +1,21 @@
-package org.processmining.plugins.beepbeep.miner;
+/*
+    A ProM plugin using BeepBeep palette for mining event traces
+    Copyright (C) 2017-2019 Sylvain Hallé and friends
+    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package src.org.processmining.plugins.beepbeep.miner;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -16,18 +33,18 @@ import org.processmining.framework.plugin.annotations.Plugin;
 import org.processmining.framework.plugin.annotations.PluginVariant;
 import org.processmining.framework.util.ui.wizard.ListWizard;
 import org.processmining.framework.util.ui.wizard.ProMWizardDisplay;
-import org.processmining.plugins.beepbeep.miner.functions.DeltaFunction;
-import org.processmining.plugins.beepbeep.miner.models.BeepbeepBPMModel;
-import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
-import org.processmining.plugins.beepbeep.miner.models.ReferenceTrend;
-import org.processmining.plugins.beepbeep.miner.models.Trace;
-import org.processmining.plugins.beepbeep.miner.processors.Beta;
-import org.processmining.plugins.beepbeep.miner.views.DistanceStep;
-import org.processmining.plugins.beepbeep.miner.views.PatternStep;
-import org.processmining.plugins.beepbeep.miner.views.SummaryStep;
-import org.processmining.plugins.beepbeep.miner.views.ThresholdStep;
-import org.processmining.plugins.beepbeep.miner.views.TrendStep;
-import org.processmining.plugins.beepbeep.miner.views.WindowsStep;
+import src.org.processmining.plugins.beepbeep.miner.functions.DeltaFunction;
+import src.org.processmining.plugins.beepbeep.miner.models.BeepbeepBPMModel;
+import src.org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
+import src.org.processmining.plugins.beepbeep.miner.models.ReferenceTrend;
+import src.org.processmining.plugins.beepbeep.miner.models.Trace;
+import src.org.processmining.plugins.beepbeep.miner.processors.Beta;
+import src.org.processmining.plugins.beepbeep.miner.views.DistanceStep;
+import src.org.processmining.plugins.beepbeep.miner.views.PatternStep;
+import src.org.processmining.plugins.beepbeep.miner.views.SummaryStep;
+import src.org.processmining.plugins.beepbeep.miner.views.ThresholdStep;
+import src.org.processmining.plugins.beepbeep.miner.views.TrendStep;
+import src.org.processmining.plugins.beepbeep.miner.views.WindowsStep;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
@@ -210,8 +227,6 @@ public class BeepBeepPlugin {
 				if (dvt == false) {
 				
 					//2020-04-21: How can I save inputs and output from the WindowProcessor processor?
-				
-	
 				}
 				i++;
 				context.getProgress().inc();
