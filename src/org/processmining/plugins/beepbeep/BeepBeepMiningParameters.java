@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner;
+package org.processmining.plugins.beepbeep;
 
 import org.deckfour.xes.classification.XEventAndClassifier;
 import org.deckfour.xes.classification.XEventClassifier;
@@ -34,7 +34,7 @@ import org.deckfour.xes.classification.XEventNameClassifier;
  * @author jalves Nicacio
  *
  */
-public class BeepbeepMiningParameters {
+public class BeepBeepMiningParameters {
 	
 	/**
 	 * Classifier parameter. This determines which classifier will be used
@@ -45,7 +45,7 @@ public class BeepbeepMiningParameters {
 	/**
 	 * Create default parameter values.
 	 */
-	public BeepbeepMiningParameters() {
+	public BeepBeepMiningParameters() {
 		classifier = new XEventAndClassifier(new XEventNameClassifier(), new XEventLifeTransClassifier());
 	}
 
@@ -82,8 +82,8 @@ public class BeepbeepMiningParameters {
 	 *         values.
 	 */
 	public boolean equals(Object object) {
-		if (object instanceof BeepbeepMiningParameters) {
-			BeepbeepMiningParameters parameters = (BeepbeepMiningParameters) object;
+		if (object instanceof BeepBeepMiningParameters) {
+			BeepBeepMiningParameters parameters = (BeepBeepMiningParameters) object;
 			if (this.classifier.equals(parameters.getClassifier())) {
 				return true;
 			}

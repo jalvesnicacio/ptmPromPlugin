@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner.views;
+package org.processmining.plugins.beepbeep.miner.views;
 
 import java.awt.Dimension;
 import java.io.IOException;
@@ -25,8 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.processmining.framework.util.ui.widgets.ProMTextField;
-import src.org.processmining.plugins.beepbeep.miner.models.ReferenceTrend;
-import src.org.processmining.plugins.beepbeep.miner.models.ReferenceTrend.DataMiningPattern;
+import org.processmining.plugins.beepbeep.miner.models.ReferenceTrend;
+import org.processmining.plugins.beepbeep.miner.models.ReferenceTrend.DataMiningPattern;
 
 public class WindowsPanel extends BeepBeepView {
 	

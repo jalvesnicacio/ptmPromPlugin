@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner.views;
+package org.processmining.plugins.beepbeep.miner.views;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -31,7 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import org.processmining.framework.util.ui.widgets.ProMComboBox;
-import src.org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
+import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
 
 public class TrendPanel extends BeepBeepView {
 	
@@ -53,7 +53,7 @@ public class TrendPanel extends BeepBeepView {
 				"Trend Configuration");
 		
 		final JPanel trendElementOPtPanel = createPanel(null, false, BoxLayout.Y_AXIS);
-		final List<String> elements = ptmSettingModel.getBpmModel().getAllKeys();		
+		final List<String> elements = ptmSettingModel.getLogModel().getAllKeys();
 		
 		/*--------------------------------------------------------------------------------------
 		 * elementOptions:

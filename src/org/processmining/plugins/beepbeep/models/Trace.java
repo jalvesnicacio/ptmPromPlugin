@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner.models;
+package org.processmining.plugins.beepbeep.models;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,8 +26,8 @@ import org.deckfour.xes.model.XAttribute;
 import org.deckfour.xes.model.XAttributeMap;
 import org.deckfour.xes.model.XEvent;
 import org.deckfour.xes.model.XTrace;
-import src.org.processmining.plugins.beepbeep.miner.functions.TimeMinusFunction;
-import src.org.processmining.plugins.beepbeep.miner.functions.TimestampFunction;
+import org.processmining.plugins.beepbeep.miner.functions.TimeMinusFunction;
+import org.processmining.plugins.beepbeep.miner.functions.TimestampFunction;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
@@ -39,7 +39,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.WindowFunction;
 import ca.uqac.lif.cep.util.Numbers;
 
-public class Trace {
+public class Trace{
 
 	private XAttributeMap traceAttributes;
 	private List<Event> events;

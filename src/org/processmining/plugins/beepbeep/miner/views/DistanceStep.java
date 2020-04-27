@@ -15,12 +15,12 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner.views;
+package org.processmining.plugins.beepbeep.miner.views;
 
 import javax.swing.JComponent;
 
 import org.processmining.framework.util.ui.wizard.ProMWizardStep;
-import src.org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
+import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
 
 public class DistanceStep implements ProMWizardStep<PTMSettingModel> {
 	

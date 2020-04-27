@@ -15,9 +15,9 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner.processors;
+package org.processmining.plugins.beepbeep.miner.processors;
 
-import src.org.processmining.plugins.beepbeep.miner.functions.AttributeToNumber;
+import org.processmining.plugins.beepbeep.miner.functions.AttributeToNumber;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.GroupProcessor;

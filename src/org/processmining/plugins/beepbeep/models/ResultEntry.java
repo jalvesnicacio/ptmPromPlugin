@@ -15,57 +15,44 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner.models;
+package org.processmining.plugins.beepbeep.models;
 
-import org.deckfour.xes.model.XAttribute;
+import java.util.ArrayList;
 
-public class Attribute {
+
+/**
+ * A class to associate each TrendDistance output with the input windows in the Window processor that runs Beta.
+ * @author jalves
+ *
+ */
+public class ResultEntry {
+	private Object m_result;
+	private ArrayList<Event> m_eventsOfEntry = new ArrayList<Event>();
 	
-	private String key;
-	private String value;
-	private Object className;
-	
-	
-	public String getKey() {
-		return key;
+	public ResultEntry(Object result) {
+		this.m_result = result;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public Object getM_result()
+	{
+		return m_result;
 	}
 
-	public String getValue() {
-		return value;
+	public void setM_result(Object m_result)
+	{
+		this.m_result = m_result;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public ArrayList<Event> getM_eventsOfEntry()
+	{
+		return m_eventsOfEntry;
 	}
 
-	
-	public Attribute(XAttribute xatt) {
-		this.key = xatt.getKey();
-		this.value = xatt.toString();
-		this.className = xatt.getClass();
+	public void setM_eventsOfEntry(ArrayList<Event> m_eventsOfEntry)
+	{
+		this.m_eventsOfEntry = m_eventsOfEntry;
 	}
 
-	public String toString() {
-		return "\tAttribute [key: " + this.key + "\t | value: " + this.value + "]\n";
-	}
-
-	public Object getClassName() {
-		return className;
-	}
-
-	public void setClassName(Object className) {
-		this.className = className;
-	}
-	
-	
-	
-	
-	
-	
 	
 	
 

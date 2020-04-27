@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner.views;
+package org.processmining.plugins.beepbeep.miner.views;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -24,10 +24,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import org.processmining.framework.util.ui.widgets.ProMPropertiesPanel;
-import src.org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
+import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
 
 public class SummaryPanel extends BeepBeepView {
 	//private PTMSettingModel model;
+
+	
+	private static final long serialVersionUID = 1L;
 
 	public SummaryPanel(PTMSettingModel model) {	
 		super("Summary",

@@ -15,14 +15,15 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner.models;
+package org.processmining.plugins.beepbeep.miner.models;
 
-import src.org.processmining.plugins.beepbeep.miner.processors.BetaCumulate;
-import src.org.processmining.plugins.beepbeep.miner.processors.BetaDistinctOccurences;
-import src.org.processmining.plugins.beepbeep.miner.processors.BetaRunningAverage;
-import src.org.processmining.plugins.beepbeep.miner.processors.BetaRunningMoments;
-import src.org.processmining.plugins.beepbeep.miner.processors.BetaValueDistribution;
-import src.org.processmining.plugins.beepbeep.miner.processors.TrendProcessor;
+import org.processmining.plugins.beepbeep.miner.processors.BetaCumulate;
+import org.processmining.plugins.beepbeep.miner.processors.BetaDistinctOccurences;
+import org.processmining.plugins.beepbeep.miner.processors.BetaRunningAverage;
+import org.processmining.plugins.beepbeep.miner.processors.BetaRunningMoments;
+import org.processmining.plugins.beepbeep.miner.processors.BetaValueDistribution;
+import org.processmining.plugins.beepbeep.miner.processors.TrendProcessor;
+import org.processmining.plugins.beepbeep.models.BeepBeepLogModel;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
@@ -30,98 +31,98 @@ import ca.uqac.lif.cep.util.Numbers;
 
 public class PTMSettingModel {
 	
-	private BeepbeepBPMModel bpmModel;
-	private ReferenceTrend trendReference;
-	private int pastWindow, presentWindow;
-	private String distance, thresholdOption;
+	private BeepBeepLogModel m_logModel;
+	private ReferenceTrend m_trendReference;
+	private int m_pastWindow, m_presentWindow;
+	private String m_distance, m_thresholdOption;
 	float thresholdValue;
 	
 	
 	public String toString() {
 		//return super.toString();
-		String s = "PTM Model: [dataMiningPattern = "+this.trendReference.getDataMiningPattern()+" | ";
+		String s = "PTM Model: [dataMiningPattern = "+this.m_trendReference.getDataMiningPattern()+" | ";
 		s = s + "pastWindow = " + this.getPastWindow() + " presentWindow = " + this.getPresentWindow();
 		s = s + "]\n";
 		return s;
 	}
 	
 	//bpmModel:
-	public void setBpmModel(BeepbeepBPMModel bpmModel) {
-		this.bpmModel = bpmModel;
+	public void setLogModel(BeepBeepLogModel logModel) {
+		this.m_logModel = logModel;
 	}
 	
-	public BeepbeepBPMModel getBpmModel(){
-		return this.bpmModel;
+	public BeepBeepLogModel getLogModel(){
+		return this.m_logModel;
 	}
 	
 	//Trend Reference:
 	public ReferenceTrend getTrendReference() {
-		return this.trendReference;
+		return this.m_trendReference;
 	}
 	
 	public void setTrendReference(ReferenceTrend trend) {
-		this.trendReference = trend;
+		this.m_trendReference = trend;
 	}
 	
 	//Past and Present Windows
 	public void setPastWindow(int pastwindow) {
-		this.pastWindow = pastwindow;
+		this.m_pastWindow = pastwindow;
 	}
 
 	public void setPresentWindow(int presentWindow) {
-		this.presentWindow = presentWindow;
+		this.m_presentWindow = presentWindow;
 	}
 	
 	public int getPastWindow() {
-		return this.pastWindow;
+		return this.m_pastWindow;
 	}
 	public int getPresentWindow() {
-		return this.presentWindow;
+		return this.m_presentWindow;
 	}
 	
 	
 	//Trend Option
 	public void setElementTrendOption(String elementTrendOption) {
-		this.trendReference.setAttributeName(elementTrendOption); 	
+		this.m_trendReference.setAttributeName(elementTrendOption); 	
 	}
 
 	public void setTrendChoice(String trendChoice) {
-		this.trendReference.setTrendChoice(trendChoice); 
+		this.m_trendReference.setTrendChoice(trendChoice); 
 	}
 	
 	public String getElementTrendOption() {
-		return this.trendReference.getAttributeName();
+		return this.m_trendReference.getAttributeName();
 	}
 	public String getTrendChoice() {
-		return this.trendReference.getTrendChoice();
+		return this.m_trendReference.getTrendChoice();
 	}
 	
 	
 	
 	// Distance function
 	public void setDistance(String distance) {
-		this.distance = distance;
+		this.m_distance = distance;
 	}
 	public String getDistance() {
-		return this.distance;
+		return this.m_distance;
 	}
 
 	//Threshold
 	public void setThresholdOption(String thresholdOption) {
-		this.thresholdOption = thresholdOption;
+		this.m_thresholdOption = thresholdOption;
 	}
 	public void setThresholdValue(float thresholdValue) {
 		this.thresholdValue = thresholdValue;		
 	}
 	public String getThresholdOption() {
-		return this.thresholdOption;
+		return this.m_thresholdOption;
 	}
 	public float getThresholdValue() {
 		return this.thresholdValue;
 	}
 	public BinaryFunction<Number, Number, Boolean> getThresholdFunction() {
 		//Numbers.isGreaterOrEqual 	
-		if (this.thresholdOption == "Smaller than") {
+		if (this.m_thresholdOption == "Smaller than") {
 			return Numbers.isLessThan;
 		}else {
 			return Numbers.isGreaterOrEqual;
@@ -132,7 +133,7 @@ public class PTMSettingModel {
 	
 	public TrendProcessor getTrendProcessor() {
 		TrendProcessor tp = null;
-		switch (this.trendReference.getTrendChoice()) {
+		switch (this.m_trendReference.getTrendChoice()) {
 			case "cumulativeSum" :
 				tp = new BetaCumulate();
 				break;
@@ -156,7 +157,7 @@ public class PTMSettingModel {
 	
 	public Function getDistanceFunction() {
 		Function distanceFunction = null;
-		switch (this.distance) {
+		switch (this.m_distance) {
 			case "manhattanDistance" :
 				distanceFunction = null;
 				break;

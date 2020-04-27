@@ -15,13 +15,14 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner;
+package org.processmining.plugins.beepbeep;
 
 import org.deckfour.xes.model.XLog;
-import src.org.processmining.plugins.beepbeep.miner.connections.AbstractBeepbeepModelConnection;
-import src.org.processmining.plugins.beepbeep.miner.models.BeepbeepBPMModel;
+import org.processmining.plugins.beepbeep.connections.AbstractBeepBeepModelConnection;
+import org.processmining.plugins.beepbeep.miner.models.BeepbeepBPMModel;
+import org.processmining.plugins.beepbeep.models.BeepBeepLogModel;
 
-public class BeepbeepMiningConnection extends AbstractBeepbeepModelConnection<BeepbeepMiningParameters>{
+public class BeepBeepMiningConnection extends AbstractBeepBeepModelConnection<BeepBeepMiningParameters>{
 
 	/**
 	 * Creates the connection between the log, model, and parameters.
@@ -29,7 +30,7 @@ public class BeepbeepMiningConnection extends AbstractBeepbeepModelConnection<Be
 	 * @param model The given workshop model.
 	 * @param parameters The given conversion parameters.
 	 */
-	public BeepbeepMiningConnection(XLog log, BeepbeepBPMModel model, BeepbeepMiningParameters parameters) {
+	public BeepBeepMiningConnection(XLog log, BeepBeepLogModel model, BeepBeepMiningParameters parameters) {
 		super(log, model, parameters);
 	}
 

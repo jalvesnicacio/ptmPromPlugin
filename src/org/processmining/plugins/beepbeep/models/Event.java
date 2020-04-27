@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner.models;
+package org.processmining.plugins.beepbeep.models;
 
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +25,7 @@ import org.deckfour.xes.model.XAttribute;
 import org.deckfour.xes.model.XAttributeMap;
 import org.deckfour.xes.model.XEvent;
 import org.joda.time.DateTime;
+import org.processmining.plugins.beepbeep.miner.models.ReferenceTrend;
 import org.ujmp.core.collections.ArrayIndexList;
 
 /**
@@ -35,8 +36,6 @@ import org.ujmp.core.collections.ArrayIndexList;
 	public class Event{
 		private XEvent xEvent;
 		private List<Attribute> attributes = new ArrayIndexList<Attribute>();
-		private ReferenceTrend ComputingTrend;
-		private Boolean deviation;
 
 		
 		/**
@@ -98,27 +97,5 @@ import org.ujmp.core.collections.ArrayIndexList;
 			}
 			return null;
 		}
-		
-		public void addResult(ReferenceTrend trend, Boolean deviation) {
-			this.ComputingTrend = trend;
-			this.deviation = deviation;
-		}
-		
-		public ReferenceTrend getComputingTrend() {
-			return this.ComputingTrend;
-		}
-		
-		public Boolean getDeviation() {
-			return this.deviation;
-		}
-		
-		public void setComputingTrend(ReferenceTrend trend) {
-			this.ComputingTrend = trend;
-		}
-		
-		public void setDeviation(Boolean dev) {
-			this.deviation = dev;
-		}
-		
 		
 	}

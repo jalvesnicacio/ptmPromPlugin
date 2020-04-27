@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.processmining.plugins.beepbeep.miner.models;
+package org.processmining.plugins.beepbeep.models;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,22 +26,13 @@ import org.deckfour.xes.info.XLogInfo;
 import org.deckfour.xes.model.XAttributeMap;
 import org.deckfour.xes.model.XEvent;
 import org.deckfour.xes.model.XTrace;
-import org.processmining.framework.util.HTMLToString;
-import org.processmining.plugins.beepbeep.models.Event;
-import org.processmining.plugins.beepbeep.models.Trace;
 
-/**
- * 
- * @author jalves
- *
- */
-
-public class BeepbeepBPMModel implements HTMLToString{
+public class BeepBeepLogModel
+{
 	private List<Trace> traceInstances = new ArrayList<Trace>();
-	
-	
 
-	public BeepbeepBPMModel(XLogInfo info) {
+	public BeepBeepLogModel(XLogInfo info)
+	{
 		for (XTrace trace : info.getLog()) {
 			Trace ti = new Trace(trace);
 			this.traceInstances.add(ti);
@@ -68,41 +59,5 @@ public class BeepbeepBPMModel implements HTMLToString{
 		return elements;
 	}
 
-	private void print() {
-		for (Trace ti : traceInstances) {
-			System.out.println(ti.toString());
-		}
-	}
-
-
-	public String toHTMLString(boolean includeHTMLTags) {
-		return null;	
-		
-		
-		
-		/*
-		 * Head line:
-		 
-		for (XEventClass eventClass : getEventClasses()) {
-			buffer.append("<th>" + eventClass.getId() + "</th>");
-		}
-		*/
-		
-		
-		/*
-		for (XEventClass fromEventClass : getEventClasses()) {
-			buffer.append("<tr>");
-			buffer.append("<td>" + fromEventClass.getId() + "</td>");
-			for (XEventClass toEventClass : getEventClasses()) {
-				buffer.append("<td>" + getDirectSuccession(fromEventClass, toEventClass) + "</td>");
-			}
-			buffer.append("</tr>");
-		}
-		*/
-		
-		
-	}
-	
-		 
 
 }

@@ -15,13 +15,14 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner.connections;
+package org.processmining.plugins.beepbeep.connections;
 
 import org.deckfour.xes.model.XLog;
 import org.processmining.framework.connections.impl.AbstractConnection;
-import src.org.processmining.plugins.beepbeep.miner.models.BeepbeepBPMModel;
+import org.processmining.plugins.beepbeep.miner.models.BeepbeepBPMModel;
+import org.processmining.plugins.beepbeep.models.BeepBeepLogModel;
 
-public class AbstractBeepbeepModelConnection<Paramenters> extends AbstractConnection {
+public class AbstractBeepBeepModelConnection<Paramenters> extends AbstractConnection {
 	/**
 	 * Label for the log end of the connection.
 	 */
@@ -47,7 +48,7 @@ public class AbstractBeepbeepModelConnection<Paramenters> extends AbstractConnec
 	 * @param parameters
 	 *            The parameters used to mine the model from the log.
 	 */
-	public AbstractBeepbeepModelConnection(XLog log, BeepbeepBPMModel model, Paramenters parameters) {
+	public AbstractBeepBeepModelConnection(XLog log, BeepBeepLogModel model, Paramenters parameters) {
 		super("Beepbeep model for log");
 		put(LOG, log);
 		put(MODEL, model);

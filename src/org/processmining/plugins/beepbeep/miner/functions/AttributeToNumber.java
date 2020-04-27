@@ -15,13 +15,13 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.org.processmining.plugins.beepbeep.miner.functions;
+package org.processmining.plugins.beepbeep.miner.functions;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Set;
 
-import src.org.processmining.plugins.beepbeep.miner.models.Attribute;
+import org.processmining.plugins.beepbeep.models.Attribute;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
