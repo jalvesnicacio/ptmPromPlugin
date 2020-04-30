@@ -1,6 +1,6 @@
 /*
  * A ProM plugin using BeepBeep palette for mining event traces
- * Copyright (C) 2017-2019 Sylvain Hallé and friends
+ * Copyright (C) 2020  Sylvain Hallé and friends
  * 
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free

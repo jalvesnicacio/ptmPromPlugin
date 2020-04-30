@@ -24,8 +24,6 @@ import static ca.uqac.lif.cep.Connector.OUTPUT;
 import static ca.uqac.lif.cep.Connector.RIGHT;
 import static ca.uqac.lif.cep.Connector.TOP;
 
-import org.processmining.plugins.beepbeep.miner.functions.AttributeToNumber;
-
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
@@ -44,7 +42,7 @@ public class BetaRunningAverage extends GroupProcessor implements TrendProcessor
 		super(1, 1);
 
 		// Treatment Attribute to Number:
-		ApplyFunction treatment = new ApplyFunction(new AttributeToNumber());
+		ApplyFunction treatment = new ApplyFunction(Numbers.numberCast);
 
 		// Running Average Group Processor:
 		GroupProcessor runningAverage = new GroupProcessor(1, 1);

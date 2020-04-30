@@ -17,8 +17,6 @@
  */
 package org.processmining.plugins.beepbeep.miner.processors;
 
-import org.processmining.plugins.beepbeep.miner.functions.AttributeToNumber;
-
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
@@ -34,7 +32,7 @@ public class BetaCumulate extends GroupProcessor implements TrendProcessor
 	{
 		super(1, 1);
 
-		ApplyFunction treatment = new ApplyFunction(new AttributeToNumber());
+		ApplyFunction treatment = new ApplyFunction(Numbers.numberCast);
 		Cumulate cumulate = new Cumulate(new CumulativeFunction<>(Numbers.addition));
 
 		Connector.connect(treatment, cumulate);

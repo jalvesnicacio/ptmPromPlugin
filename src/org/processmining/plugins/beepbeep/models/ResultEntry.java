@@ -19,6 +19,8 @@ package org.processmining.plugins.beepbeep.models;
 
 import java.util.ArrayList;
 
+import org.deckfour.xes.model.XEvent;
+
 /**
  * A class to associate each TrendDistance output with the input windows in the
  * Window processor that runs Beta.
@@ -29,7 +31,7 @@ import java.util.ArrayList;
 public class ResultEntry
 {
 	private Object m_result;
-	private ArrayList<Event> m_eventsOfEntry = new ArrayList<Event>();
+	private ArrayList<XEvent> m_eventsOfEntry = new ArrayList<XEvent>();
 
 	public ResultEntry(Object result)
 	{
@@ -46,12 +48,12 @@ public class ResultEntry
 		this.m_result = m_result;
 	}
 
-	public ArrayList<Event> getM_eventsOfEntry()
+	public ArrayList<XEvent> getM_eventsOfEntry()
 	{
 		return m_eventsOfEntry;
 	}
 
-	public void setM_eventsOfEntry(ArrayList<Event> m_eventsOfEntry)
+	public void setM_eventsOfEntry(ArrayList<XEvent> m_eventsOfEntry)
 	{
 		this.m_eventsOfEntry = m_eventsOfEntry;
 	}

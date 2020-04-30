@@ -17,13 +17,12 @@
  */
 package org.processmining.plugins.beepbeep.miner.processors;
 
-import org.processmining.plugins.beepbeep.miner.functions.AttributeToNumber;
-
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.peg.ml.RunningMoments;
+import ca.uqac.lif.cep.util.Numbers;
 
 public class BetaRunningMoments extends GroupProcessor implements TrendProcessor
 {
@@ -32,7 +31,7 @@ public class BetaRunningMoments extends GroupProcessor implements TrendProcessor
 	{
 		super(1, 1);
 		// Treatment Attribute to Number:
-		ApplyFunction treatment = new ApplyFunction(new AttributeToNumber());
+		ApplyFunction treatment = new ApplyFunction(Numbers.numberCast);
 
 		// Vector of moments processor:
 		RunningMoments runningMoments = new RunningMoments(num_moments);

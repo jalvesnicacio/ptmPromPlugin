@@ -17,12 +17,10 @@
  */
 package org.processmining.plugins.beepbeep.miner.processors;
 
-import org.processmining.plugins.beepbeep.miner.functions.AttributeToString;
-
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.functions.ApplyFunction;
+import ca.uqac.lif.cep.tmf.Passthrough;
 
 /**
  * Transforms the attribute value into a string and calculates the number of
@@ -39,7 +37,7 @@ public class BetaValueDistribution extends GroupProcessor implements TrendProces
 	{
 		super(1, 1);
 
-		ApplyFunction treatment = new ApplyFunction(new AttributeToString());
+		Passthrough treatment = new Passthrough();
 		SymbolDistribution symbolDistribution = new SymbolDistribution();
 
 		Connector.connect(treatment, symbolDistribution);

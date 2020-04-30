@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.deckfour.xes.model.XEvent;
 import org.processmining.framework.util.HTMLToString;
 
 public class BeepBeepResult implements HTMLToString
@@ -68,11 +69,11 @@ public class BeepBeepResult implements HTMLToString
 		{
 			ResultEntry rentry = (ResultEntry) m.getValue();
 			Object result = rentry.getM_result();
-			ArrayList<Event> events = rentry.getM_eventsOfEntry();
+			ArrayList<XEvent> events = rentry.getM_eventsOfEntry();
 			buffer.append("<tr><td>");
 			buffer.append(result.toString());
 			buffer.append("</td></tr>");
-			for (Event evt : events)
+			for (XEvent evt : events)
 			{
 				buffer.append("<tr><td>");
 				buffer.append(evt.toString());
