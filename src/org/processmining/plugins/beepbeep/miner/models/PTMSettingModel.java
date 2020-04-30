@@ -17,7 +17,7 @@
  */
 package org.processmining.plugins.beepbeep.miner.models;
 
-import org.processmining.plugins.beepbeep.BeepBeepLogModel;
+import org.deckfour.xes.model.XLog;
 import org.processmining.plugins.beepbeep.miner.processors.BetaCumulate;
 import org.processmining.plugins.beepbeep.miner.processors.BetaDistinctOccurences;
 import org.processmining.plugins.beepbeep.miner.processors.BetaRunningAverage;
@@ -32,7 +32,7 @@ import ca.uqac.lif.cep.util.Numbers;
 public class PTMSettingModel
 {
 
-	private BeepBeepLogModel m_logModel;
+	private XLog m_logModel;
 	private ReferenceTrend m_trendReference;
 	private int m_pastWindow, m_presentWindow;
 	private String m_distance, m_thresholdOption;
@@ -49,12 +49,12 @@ public class PTMSettingModel
 	}
 
 	// bpmModel:
-	public void setLogModel(BeepBeepLogModel logModel)
+	public void setLogModel(XLog logModel)
 	{
 		this.m_logModel = logModel;
 	}
 
-	public BeepBeepLogModel getLogModel()
+	public XLog getLogModel()
 	{
 		return this.m_logModel;
 	}

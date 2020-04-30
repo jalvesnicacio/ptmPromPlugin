@@ -1,16 +1,16 @@
 package org.processmining.plugins.beepbeep.miner;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.deckfour.xes.model.XLog;
 import org.deckfour.xes.model.XTrace;
 import org.processmining.contexts.uitopia.UIPluginContext;
 import org.processmining.framework.util.ui.wizard.ListWizard;
 import org.processmining.framework.util.ui.wizard.ProMWizardDisplay;
-import org.processmining.plugins.beepbeep.BeepBeepLogModel;
 import org.processmining.plugins.beepbeep.BeepBeepResult;
 import org.processmining.plugins.beepbeep.ProcessesPlugin;
 import org.processmining.plugins.beepbeep.ResultEntry;
-import org.processmining.plugins.beepbeep.miner.functions.DeltaFunction;
 import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
 import org.processmining.plugins.beepbeep.miner.models.ReferenceTrend;
 import org.processmining.plugins.beepbeep.miner.processors.Beta;
@@ -36,11 +36,12 @@ public class PtmProcess implements ProcessesPlugin
 	private PTMSettingModel settingsModel;
 
 	@Override
-	public BeepBeepResult process(UIPluginContext context, BeepBeepLogModel logModel)
+	public BeepBeepResult process(UIPluginContext context, XLog log)
 	{
 
 		// BeepBeepLogModel model = this.settingsModel.getLogModel();
-		List<XTrace> traces = logModel.getTraceInstances();
+		List<XTrace> traces = new ArrayList<XTrace>();
+		traces.addAll(log);
 		BeepBeepResult result = new BeepBeepResult();
 
 		/**
@@ -53,7 +54,7 @@ public class PtmProcess implements ProcessesPlugin
 		Processor beta = new Beta(settingsModel.getElementTrendOption(),
 				settingsModel.getTrendProcessor());
 		Window windowProcessor = new Window(beta, window);
-		Function delta = new DeltaFunction(settingsModel.getDistanceFunction());
+		Function delta = settingsModel.getDistanceFunction();
 		Float d = settingsModel.getThresholdValue();
 		BinaryFunction<Number, Number, Boolean> comp = settingsModel.getThresholdFunction();
 
@@ -105,10 +106,10 @@ public class PtmProcess implements ProcessesPlugin
 	}
 
 	@Override
-	public void executeWizard(UIPluginContext context, BeepBeepLogModel logModel)
+	public void executeWizard(UIPluginContext context, XLog log)
 	{
 		this.settingsModel = new PTMSettingModel();
-		this.settingsModel.setLogModel(logModel);
+		this.settingsModel.setLogModel(log);
 
 		@SuppressWarnings("unchecked")
 		ListWizard<PTMSettingModel> wizard = new ListWizard<PTMSettingModel>(new PatternStep(),

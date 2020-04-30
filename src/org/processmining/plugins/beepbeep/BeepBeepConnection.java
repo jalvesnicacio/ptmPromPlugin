@@ -46,10 +46,9 @@ public class BeepBeepConnection extends AbstractConnection {
 	 * @param parameters
 	 *            The parameters used to mine the model from the log.
 	 */
-	public BeepBeepConnection(XLog log, BeepBeepLogModel model, BeepBeepParameters parameters) {
+	public BeepBeepConnection(XLog log, BeepBeepParameters parameters) {
 		super("Beepbeep model for log");
 		put(LOG, log);
-		put(MODEL, model);
 		this.parameters = parameters;
 	}
 

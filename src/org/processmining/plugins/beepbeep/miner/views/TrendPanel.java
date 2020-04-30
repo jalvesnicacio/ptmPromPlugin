@@ -22,7 +22,10 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -30,6 +33,9 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import org.deckfour.xes.model.XAttributeMap;
+import org.deckfour.xes.model.XEvent;
+import org.deckfour.xes.model.XLog;
 import org.processmining.framework.util.ui.widgets.ProMComboBox;
 import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
 
@@ -53,7 +59,7 @@ public class TrendPanel extends BeepBeepView
 				"Trend Configuration");
 
 		final JPanel trendElementOPtPanel = createPanel(null, false, BoxLayout.Y_AXIS);
-		final List<String> elements = ptmSettingModel.getLogModel().getAllKeys();
+		final List<String> elements = getAllKeys(ptmSettingModel.getLogModel());
 
 		/*--------------------------------------------------------------------------------------
 		 * elementOptions:
@@ -164,6 +170,22 @@ public class TrendPanel extends BeepBeepView
 			return "cumulativeSum";
 		}
 
+	}
+	
+	protected static List<String> getAllKeys(XLog log)
+	{
+		List<String> elements = new ArrayList<String>();
+		Iterator<XEvent> evit = log.get(0).iterator();
+		if (evit.hasNext())
+		{
+			XEvent event = evit.next();
+			XAttributeMap attributes = event.getAttributes();
+			Set<String> keys = attributes.keySet();
+			keys.forEach((String name) -> {
+				elements.add(name);
+			});
+		}
+		return elements;
 	}
 
 }
