@@ -18,7 +18,6 @@
 package org.processmining.plugins.beepbeep;
 
 import org.deckfour.xes.model.XLog;
-import org.processmining.plugins.beepbeep.models.BeepBeepLogModel;
 
 public class BeepBeepMiningConnection
 		extends AbstractBeepBeepConnection<BeepBeepMiningParameters>

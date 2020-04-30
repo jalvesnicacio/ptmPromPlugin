@@ -28,9 +28,9 @@ import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
 
 public class SummaryPanel extends BeepBeepView
 {
-	// private PTMSettingModel model;
+	// protected PTMSettingModel model;
 
-	private static final long serialVersionUID = 1L;
+	protected static final long serialVersionUID = 1L;
 
 	public SummaryPanel(PTMSettingModel model)
 	{

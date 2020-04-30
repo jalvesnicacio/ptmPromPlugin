@@ -48,7 +48,12 @@ import com.fluxicon.slickerbox.factory.SlickerFactory;
 
 public class BeepBeepView extends JPanel
 {
-	private IconVerticalTabbedPane tabbedPane;
+	/**
+	 * Dummy UID
+	 */
+	protected static final long serialVersionUID = 1L;
+	
+	protected IconVerticalTabbedPane tabbedPane;
 	protected ProMPropertiesPanel beepBeepPanel;
 
 	public BeepBeepView(String tabName, String urlString, String title)

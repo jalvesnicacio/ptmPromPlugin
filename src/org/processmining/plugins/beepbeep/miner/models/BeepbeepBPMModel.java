@@ -64,7 +64,7 @@ public class BeepbeepBPMModel implements HTMLToString
 		return elements;
 	}
 
-	private void print()
+	protected void print()
 	{
 		for (XTrace ti : traceInstances)
 		{

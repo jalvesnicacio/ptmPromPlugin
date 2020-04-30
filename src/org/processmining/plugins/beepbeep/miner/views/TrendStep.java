@@ -25,8 +25,8 @@ import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
 public class TrendStep implements ProMWizardStep<PTMSettingModel>
 {
 
-	private String title = "";
-	private PTMSettingModel model;
+	protected String title = "";
+	protected PTMSettingModel model;
 
 	public String getTitle()
 	{

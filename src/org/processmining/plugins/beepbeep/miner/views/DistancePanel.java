@@ -29,8 +29,8 @@ import javax.swing.JRadioButton;
 public class DistancePanel extends BeepBeepView
 {
 
-	private static final long serialVersionUID = 1L;
-	private JRadioButton manhattanDistanceRBtn, euclidianDistanceRBtn, scalarDifferenceRBtn,
+	protected static final long serialVersionUID = 1L;
+	protected JRadioButton manhattanDistanceRBtn, euclidianDistanceRBtn, scalarDifferenceRBtn,
 			ratioRBtn;
 
 	/**

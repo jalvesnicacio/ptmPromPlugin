@@ -31,8 +31,8 @@ import org.processmining.plugins.beepbeep.miner.models.ReferenceTrend.DataMining
 public class WindowsPanel extends BeepBeepView
 {
 
-	private static final long serialVersionUID = 1L;
-	private ProMTextField pastWindow, presentWindow;
+	protected static final long serialVersionUID = 1L;
+	protected ProMTextField pastWindow, presentWindow;
 
 	/**
 	 * 

@@ -25,7 +25,7 @@ import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
 public class SummaryStep implements ProMWizardStep<PTMSettingModel>
 {
 
-	// private String title = "";
+	// protected String title = "";
 
 	public PTMSettingModel apply(PTMSettingModel model, JComponent component)
 	{

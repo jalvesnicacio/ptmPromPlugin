@@ -2,9 +2,7 @@ package org.processmining.tests.gettingstarted;
 import org.junit.Test;
 import org.processmining.contexts.cli.CLI;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
-import junit.framework.AssertionFailedError;
 
 public class GettingStartedTest extends TestCase {
 

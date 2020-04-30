@@ -17,13 +17,13 @@
  */
 package org.processmining.plugins.beepbeep.miner.models;
 
+import org.processmining.plugins.beepbeep.BeepBeepLogModel;
 import org.processmining.plugins.beepbeep.miner.processors.BetaCumulate;
 import org.processmining.plugins.beepbeep.miner.processors.BetaDistinctOccurences;
 import org.processmining.plugins.beepbeep.miner.processors.BetaRunningAverage;
 import org.processmining.plugins.beepbeep.miner.processors.BetaRunningMoments;
 import org.processmining.plugins.beepbeep.miner.processors.BetaValueDistribution;
 import org.processmining.plugins.beepbeep.miner.processors.TrendProcessor;
-import org.processmining.plugins.beepbeep.models.BeepBeepLogModel;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;

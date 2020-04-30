@@ -8,7 +8,6 @@ import org.processmining.contexts.uitopia.annotations.UITopiaVariant;
 import org.processmining.framework.plugin.annotations.Plugin;
 import org.processmining.framework.plugin.annotations.PluginVariant;
 import org.processmining.plugins.beepbeep.miner.PatTheMinerPlugin;
-import org.processmining.plugins.beepbeep.models.BeepBeepResult;
 
 public class Main
 {

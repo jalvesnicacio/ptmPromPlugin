@@ -36,10 +36,10 @@ import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
 public class TrendPanel extends BeepBeepView
 {
 
-	private static final long serialVersionUID = 1L;
-	private ProMComboBox<String> attributesCbBox;
-	private JRadioButton directValueRBtn, otherRBtn;
-	private JRadioButton runningAverageRBtn, vectorMomentsRBtn, distinctOccurrencesRBtn,
+	protected static final long serialVersionUID = 1L;
+	protected ProMComboBox<String> attributesCbBox;
+	protected JRadioButton directValueRBtn, otherRBtn;
+	protected JRadioButton runningAverageRBtn, vectorMomentsRBtn, distinctOccurrencesRBtn,
 			valueDistributionRBtn, cumulativeSumRBtn;
 
 	/**

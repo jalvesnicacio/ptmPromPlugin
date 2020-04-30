@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.processmining.plugins.beepbeep.models;
+package org.processmining.plugins.beepbeep;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -65,9 +65,9 @@ public class BeepBeepResult implements HTMLToString
 		buffer.append("<tr><th colspan='3'>Results</th></tr>");
 		buffer.append("<tr><th>Deviation Result</th><th>Event</th><th>Computing Trend</th></tr>");
 
-		for (Map.Entry m : m_results.entrySet())
+		for (Map.Entry<Integer,ResultEntry> m : m_results.entrySet())
 		{
-			ResultEntry rentry = (ResultEntry) m.getValue();
+			ResultEntry rentry = m.getValue();
 			Object result = rentry.getM_result();
 			ArrayList<XEvent> events = rentry.getM_eventsOfEntry();
 			buffer.append("<tr><td>");

@@ -34,9 +34,9 @@ import org.processmining.framework.util.ui.widgets.ProMTextField;
 public class PatternPanel extends BeepBeepView
 {
 
-	private static final long serialVersionUID = 1L;
-	private JRadioButton selfCorrelat, patternBased;
-	private ProMTextField patternValue;
+	protected static final long serialVersionUID = 1L;
+	protected JRadioButton selfCorrelat, patternBased;
+	protected ProMTextField patternValue;
 
 	/**
 	 * 

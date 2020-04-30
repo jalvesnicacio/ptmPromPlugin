@@ -26,8 +26,6 @@ import org.deckfour.xes.info.XLogInfoFactory;
 import org.deckfour.xes.model.XLog;
 import org.processmining.contexts.uitopia.UIPluginContext;
 import org.processmining.framework.connections.ConnectionCannotBeObtained;
-import org.processmining.plugins.beepbeep.models.BeepBeepLogModel;
-import org.processmining.plugins.beepbeep.models.BeepBeepResult;
 
 public abstract class BeepBeepPlugin
 {

@@ -31,9 +31,9 @@ import org.processmining.framework.util.ui.widgets.ProMTextField;
 public class ThresholdPanel extends BeepBeepView
 {
 
-	private static final long serialVersionUID = 1L;
-	private JRadioButton smallerThanRBtn, largerThanRBtn;
-	private ProMTextField thresholdValueTxtField;
+	protected static final long serialVersionUID = 1L;
+	protected JRadioButton smallerThanRBtn, largerThanRBtn;
+	protected ProMTextField thresholdValueTxtField;
 
 	/**
 	 * 
