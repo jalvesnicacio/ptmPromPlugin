@@ -1,6 +1,6 @@
 /*
- * A ProM plugin using BeepBeep palette for mining event traces Copyright (C)
- * 2017-2019 Sylvain Hallé and friends
+ * A ProM plugin using BeepBeep
+ * Copyright (C) 2020 Jalves Nicacio and friends
  * 
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,66 +17,59 @@
  */
 package org.processmining.plugins.beepbeep;
 
-import java.io.IOException;
-import java.util.Collection;
-
-import org.deckfour.xes.info.XLogInfo;
-import org.deckfour.xes.info.XLogInfoFactory;
 import org.deckfour.xes.model.XLog;
 import org.processmining.contexts.uitopia.UIPluginContext;
 
 public abstract class BeepBeepPlugin
 {
-	public abstract ProcessesPlugin createProcessPlugin();
-
 	/**
-	 * 
-	 * @param context
-	 * @param log
-	 * @return
-	 * @throws IOException
+	 * The log instance on which the plugin is asked to run.
 	 */
-	public BeepBeepResult execute(UIPluginContext context, XLog log) throws IOException
+	/*@ non_null @*/ protected XLog m_log;
+	
+	/**
+	 * Runs the plugin on a log.
+	 * @param log The log
+	 * @return The result from the execution of the plugin
+	 */
+	public abstract BeepBeepResult process(XLog log);
+	
+	/**
+	 * Runs a GUI-based wizard to setup parameters prior to the execution of
+	 * the plugin.
+	 * @param context The UI context to which GUI elements (panels, etc.)
+	 * are to be added
+	 */
+	public abstract void executeWizard(UIPluginContext context);
+	
+	/**
+	 * Creates a new instance of the BeepBeep plugin.
+	 * @param log The log instance on which the plugin is asked to run
+	 */
+	public BeepBeepPlugin(/*@ non_null @*/ XLog log)
 	{
-		//this.m_logModel = setParameters(context, log, new BeepBeepParameters());
-		ProcessesPlugin plugin = this.createProcessPlugin();
-		plugin.executeWizard(context, log);
-		BeepBeepResult result = plugin.process(context, log);
-		// System.out.println(result.toHTMLString(true));
-		return result;
+		super();
+		m_log = log;
+	}
+	
+	/**
+	 * Gets the log instance on which the plugin is asked to run.
+	 * @return The log instance
+	 */
+	/*@ non_null @*/ public XLog getLog()
+	{
+		return m_log;
 	}
 
 	/**
-	 * SetParameters Create XlogInfo based on log, Create a LogModel based on info,
-	 * and set classifiers on parameters.
 	 * 
 	 * @param context
 	 * @param log
-	 * @param parameters
 	 * @return
 	 */
-	private void setParameters(UIPluginContext context, XLog log,
-			BeepBeepParameters parameters)
+	public BeepBeepResult execute(UIPluginContext context, XLog log)
 	{
-		Collection<BeepBeepConnection> connections;
-		XLogInfo info = XLogInfoFactory.createLogInfo(log);
-		/*try
-		{
-			ConnectionManager cm = context.getConnectionManager();
-			connections = cm.getConnections(BeepBeepConnection.class, context, log);
-			for (BeepBeepConnection connection : connections)
-			{
-				if (connection.getObjectWithRole(BeepBeepConnection.LOG).equals(log)
-						&& connection.getParameters().equals(parameters))
-				{
-					return connection.getObjectWithRole(BeepBeepConnection.MODEL);
-				}
-			}
-		}
-		catch (ConnectionCannotBeObtained e)
-		{
-		}
-		 */
-		context.addConnection(new BeepBeepConnection(log, parameters));
+		executeWizard(context);
+		return process(log);
 	}
 }
