@@ -12,14 +12,11 @@ import org.processmining.plugins.beepbeep.models.BeepBeepResult;
 
 public class Main
 {
-	@Plugin(name = "Mine Log with BeepBeep", 
-			returnLabels = { "Beepbeep BPM Model" }, 
-			returnTypes = { BeepBeepResult.class }, 
-			parameterLabels = {"Log" }, 
-			userAccessible = true)
-	
+	@Plugin(name = "Mine Log with BeepBeep", returnLabels = { "Beepbeep BPM Model" }, returnTypes = {
+			BeepBeepResult.class }, parameterLabels = { "Log" }, userAccessible = true)
+
 	@UITopiaVariant(affiliation = "UQAC", author = "Laboratoire d'Informatique Formelle (LIF)", email = "shalle@uqac.ca")
-	@PluginVariant(variantLabel = "Integration ProM - Beepbeep", requiredParameterLabels = {0})
+	@PluginVariant(variantLabel = "Integration ProM - Beepbeep", requiredParameterLabels = { 0 })
 	public static BeepBeepResult main(UIPluginContext context, XLog log) throws IOException
 	{
 		BeepBeepPlugin beepbeepPlugin = new PatTheMinerPlugin();

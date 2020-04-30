@@ -59,3 +59,4 @@ jacoco.exec
 
 # SVN
 .svn/
+*.checkstyle

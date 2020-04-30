@@ -8,5 +8,6 @@ import org.processmining.plugins.beepbeep.models.BeepBeepResult;
 public interface ProcessesPlugin
 {
 	public BeepBeepResult process(UIPluginContext context, BeepBeepLogModel logModel);
+
 	public void executeWizard(UIPluginContext context, BeepBeepLogModel logModel);
 }

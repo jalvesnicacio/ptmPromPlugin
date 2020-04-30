@@ -1,19 +1,19 @@
 /*
-    A ProM plugin using BeepBeep palette for mining event traces
-    Copyright (C) 2017-2019 Sylvain Hallé and friends
-    
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-    
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * A ProM plugin using BeepBeep palette for mining event traces Copyright (C)
+ * 2017-2019 Sylvain Hallé and friends
+ * 
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.processmining.plugins.beepbeep.models;
 
@@ -39,111 +39,118 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.WindowFunction;
 import ca.uqac.lif.cep.util.Numbers;
 
-public class Trace{
+public class Trace
+{
 
 	private XAttributeMap traceAttributes;
 	private List<Event> events;
-	
+
 	/**
 	 * Constructor
+	 * 
 	 * @param trace
 	 */
-	public Trace(XTrace trace) {
+	public Trace(XTrace trace)
+	{
 		this.traceAttributes = trace.getAttributes();
-		this.events = new ArrayList<Event>(); 
-		
-		for (XEvent xEvent : trace) {
+		this.events = new ArrayList<Event>();
+
+		for (XEvent xEvent : trace)
+		{
 			Event ev = new Event(xEvent);
 			this.events.add(ev);
 		}
 	}
-	
-	public int getPeriodInDays(String fieldName) {
-		
-		//Output:
+
+	public int getPeriodInDays(String fieldName)
+	{
+
+		// Output:
 		Number d = 0;
-		
+
 		// Processor QS1:
-		QueueSource source = new QueueSource(); 
+		QueueSource source = new QueueSource();
 		source.setEvents(events.toArray());
 		source.loop(false);
-		
+
 		// Processor QS2:
 		QueueSource field = new QueueSource().setEvents(fieldName);
-		
-		//Processor F1 and function f1:
+
+		// Processor F1 and function f1:
 		Function ts = new TimestampFunction();
 		ApplyFunction extractTimestamp = new ApplyFunction(ts);
-		
-		//Processor W(2) and function f2
+
+		// Processor W(2) and function f2
 		Function timeMinus = new TimeMinusFunction();
 		WindowFunction win = new WindowFunction(timeMinus);
-		
-		//Processor F2 and function f3
-		Cumulate counterPeriod = new Cumulate(
-				new CumulativeFunction<Number>(Numbers.addition));
-		
+
+		// Processor F2 and function f3
+		Cumulate counterPeriod = new Cumulate(new CumulativeFunction<Number>(Numbers.addition));
+
 		// -- Connections: --
-		Connector.connect(source,0,extractTimestamp,0);
-		Connector.connect(field,0,extractTimestamp,1);
-		Connector.connect(extractTimestamp,win);
+		Connector.connect(source, 0, extractTimestamp, 0);
+		Connector.connect(field, 0, extractTimestamp, 1);
+		Connector.connect(extractTimestamp, win);
 		Connector.connect(win, counterPeriod);
-		
-		
+
 		// -- execution part --
 		Pullable p = counterPeriod.getPullableOutput();
-		while(p.hasNext()) {
+		while (p.hasNext())
+		{
 			d = (Number) p.pull();
 		}
-		//System.out.println("Trace period: " + d + " hours");
-		//System.out.println("Trace period in days: " + d.intValue() / 24);
+		// System.out.println("Trace period: " + d + " hours");
+		// System.out.println("Trace period in days: " + d.intValue() / 24);
 		return d.intValue() / 24;
 	}
 
 	/**
 	 * Creates a string with information about all Trace attributes
+	 * 
 	 * @param tab
 	 * @param xattmap
 	 * @return
 	 */
-	public StringBuilder getStringOfXAttributeMap(String tab, XAttributeMap xattmap){
+	public StringBuilder getStringOfXAttributeMap(String tab, XAttributeMap xattmap)
+	{
 		Iterator<Entry<String, XAttribute>> atit = xattmap.entrySet().iterator();
 		StringBuilder info = new StringBuilder("");
-		while(atit.hasNext()){
+		while (atit.hasNext())
+		{
 			Entry<String, XAttribute> xae = atit.next();
 			XAttribute xa = xae.getValue();
-			info.append(tab+"[Attributes=> "+ "Key: \t"+xa.getKey()+" | value: \t"+xa+"]\n");
+			info.append(tab + "[Attributes=> " + "Key: \t" + xa.getKey() + " | value: \t" + xa + "]\n");
 		}
 		return info;
 	}
-	
-	
+
 	/**
 	 * getEvents
+	 * 
 	 * @return set of Event
 	 */
-	public List<Event> getEvents(){
+	public List<Event> getEvents()
+	{
 		return this.events;
 	}
-	
+
 	/**
 	 * toString
+	 * 
 	 * @return the trace
 	 */
-	public String toString() {
+	public String toString()
+	{
 		StringBuilder sb = new StringBuilder();
 		sb.append(" ------ TRACE ------\n");
 		sb.append(getStringOfXAttributeMap("\t", this.traceAttributes));
-		this.events.forEach(evt->{
-			sb.append("-- Event Info --"+"\n");
+		this.events.forEach(evt -> {
+			sb.append("-- Event Info --" + "\n");
 			sb.append(evt.toString());
 			sb.append("----\n");
 		});
-		
+
 		return sb.toString();
 	}
-	
-	
-	
-	
+
 }
