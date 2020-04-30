@@ -1,6 +1,6 @@
 /*
- * A ProM plugin using BeepBeep palette for mining event traces Copyright (C)
- * 2017-2019 Sylvain Hallé and friends
+ * A ProM plugin using BeepBeep
+ * Copyright (C) 2020 Jalves Nicacio and friends
  * 
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -34,7 +34,7 @@ import ca.uqac.lif.cep.functions.TurnInto;
 import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.util.Numbers;
 
-public class BetaRunningAverage extends GroupProcessor implements TrendProcessor
+public class BetaRunningAverage extends GroupProcessor
 {
 
 	public BetaRunningAverage()
