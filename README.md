@@ -25,7 +25,7 @@ Follow the same instructions to [run the Prom](https://svn.win.tue.nl/trac/prom/
 	3. Run the "Prom with UITopia" launch configuration.
 
 1. With the program running, click on the "import ..." button. ![Main Screen of ProM][prom_main]
-2. Next, select an example file (.xes) in the EventLogs\Chapter_1 project folder.
+2. Next, select an example file (.xes). Examples of logs can be found on the [ProM website](http://www.processmining.org/event_logs_and_models_used_in_book).
 3. Choose the "ProM Log Files (XESLite - MapDB) import plugin. Click Ok.![][select_import_plugin]
 4. Then click on the "Use Resource" button (button with an arrowhead on the right side)![][use_resource]
 5. In the Actions window, in the search field, type BeepBeep
