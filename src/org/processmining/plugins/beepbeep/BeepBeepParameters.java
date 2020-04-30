@@ -34,7 +34,7 @@ import org.deckfour.xes.classification.XEventNameClassifier;
  * @author jalves Nicacio
  *
  */
-public class BeepBeepMiningParameters
+public class BeepBeepParameters
 {
 
 	/**
@@ -46,7 +46,7 @@ public class BeepBeepMiningParameters
 	/**
 	 * Create default parameter values.
 	 */
-	public BeepBeepMiningParameters()
+	public BeepBeepParameters()
 	{
 		classifier = new XEventAndClassifier(new XEventNameClassifier(),
 				new XEventLifeTransClassifier());
@@ -87,9 +87,13 @@ public class BeepBeepMiningParameters
 	 */
 	public boolean equals(Object object)
 	{
-		if (object instanceof BeepBeepMiningParameters)
+		if (object == null)
 		{
-			BeepBeepMiningParameters parameters = (BeepBeepMiningParameters) object;
+			return false;
+		}
+		if (object instanceof BeepBeepParameters)
+		{
+			BeepBeepParameters parameters = (BeepBeepParameters) object;
 			if (this.classifier.equals(parameters.getClassifier()))
 			{
 				return true;

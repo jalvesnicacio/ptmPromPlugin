@@ -20,12 +20,12 @@ package org.processmining.plugins.beepbeep;
 import java.io.IOException;
 import java.util.Collection;
 
-import org.deckfour.xes.classification.XEventClassifier;
 import org.deckfour.xes.info.XLogInfo;
 import org.deckfour.xes.info.XLogInfoFactory;
 import org.deckfour.xes.model.XLog;
 import org.processmining.contexts.uitopia.UIPluginContext;
 import org.processmining.framework.connections.ConnectionCannotBeObtained;
+import org.processmining.framework.connections.ConnectionManager;
 
 public abstract class BeepBeepPlugin
 {
@@ -42,7 +42,7 @@ public abstract class BeepBeepPlugin
 	 */
 	public BeepBeepResult execute(UIPluginContext context, XLog log) throws IOException
 	{
-		this.m_logModel = setParameters(context, log, new BeepBeepMiningParameters());
+		this.m_logModel = setParameters(context, log, new BeepBeepParameters());
 		ProcessesPlugin plugin = this.createProcessPlugin();
 		plugin.executeWizard(context, this.m_logModel);
 		BeepBeepResult result = plugin.process(context, this.m_logModel);
@@ -60,26 +60,21 @@ public abstract class BeepBeepPlugin
 	 * @return
 	 */
 	private BeepBeepLogModel setParameters(UIPluginContext context, XLog log,
-			BeepBeepMiningParameters parameters)
+			BeepBeepParameters parameters)
 	{
-		Collection<BeepBeepMiningConnection> connections;
+		Collection<BeepBeepConnection> connections;
 		XLogInfo info = XLogInfoFactory.createLogInfo(log);
 		BeepBeepLogModel logModel = new BeepBeepLogModel(info);
-		for (XEventClassifier classifier : info.getEventClassifiers())
-		{
-			parameters.setClassifier(classifier);
-		}
 		try
 		{
-			connections = context.getConnectionManager().getConnections(BeepBeepMiningConnection.class,
-					context, log);
-
-			for (BeepBeepMiningConnection connection : connections)
+			ConnectionManager cm = context.getConnectionManager();
+			connections = cm.getConnections(BeepBeepConnection.class, context, log);
+			for (BeepBeepConnection connection : connections)
 			{
-				if (connection.getObjectWithRole(BeepBeepMiningConnection.LOG).equals(log)
+				if (connection.getObjectWithRole(BeepBeepConnection.LOG).equals(log)
 						&& connection.getParameters().equals(parameters))
 				{
-					return connection.getObjectWithRole(BeepBeepMiningConnection.MODEL);
+					return connection.getObjectWithRole(BeepBeepConnection.MODEL);
 				}
 			}
 		}
@@ -87,7 +82,7 @@ public abstract class BeepBeepPlugin
 		{
 		}
 
-		context.addConnection(new BeepBeepMiningConnection(log, logModel, parameters));
+		context.addConnection(new BeepBeepConnection(log, logModel, parameters));
 		return logModel;
 	}
 }

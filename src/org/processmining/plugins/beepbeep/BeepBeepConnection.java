@@ -20,7 +20,7 @@ package org.processmining.plugins.beepbeep;
 import org.deckfour.xes.model.XLog;
 import org.processmining.framework.connections.impl.AbstractConnection;
 
-public class AbstractBeepBeepConnection<Paramenters> extends AbstractConnection {
+public class BeepBeepConnection extends AbstractConnection {
 	/**
 	 * Label for the log end of the connection.
 	 */
@@ -33,7 +33,7 @@ public class AbstractBeepBeepConnection<Paramenters> extends AbstractConnection 
 	/**
 	 * The parameters used to mine the model from the log.
 	 */
-	private Paramenters parameters;
+	private BeepBeepParameters parameters;
 
 	/**
 	 * Creates a connection from an event log to a model, where the
@@ -46,7 +46,7 @@ public class AbstractBeepBeepConnection<Paramenters> extends AbstractConnection 
 	 * @param parameters
 	 *            The parameters used to mine the model from the log.
 	 */
-	public AbstractBeepBeepConnection(XLog log, BeepBeepLogModel model, Paramenters parameters) {
+	public BeepBeepConnection(XLog log, BeepBeepLogModel model, BeepBeepParameters parameters) {
 		super("Beepbeep model for log");
 		put(LOG, log);
 		put(MODEL, model);
@@ -59,7 +59,7 @@ public class AbstractBeepBeepConnection<Paramenters> extends AbstractConnection 
 	 * @return The parameters used to derive the workshop model from the event
 	 *         log.
 	 */
-	public Paramenters getParameters() {
+	public BeepBeepParameters getParameters() {
 		return parameters;
 	}
 
