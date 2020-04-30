@@ -55,11 +55,11 @@ public class XTraceSource extends Source
 	@Override
 	protected boolean compute(Object[] in, Queue<Object[]> out)
 	{
-		XEvent e = m_trace.get(m_index++);
-		if (e == null)
+		if (m_index >= m_trace.size())
 		{
 			return false;
 		}
+		XEvent e = m_trace.get(m_index++);
 		out.add(new Object[] {e});
 		return true;
 	}
