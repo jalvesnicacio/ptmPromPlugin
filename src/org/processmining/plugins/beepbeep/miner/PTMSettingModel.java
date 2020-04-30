@@ -17,6 +17,8 @@
  */
 package org.processmining.plugins.beepbeep.miner;
 
+import org.apache.commons.math3.ml.distance.EuclideanDistance;
+import org.apache.commons.math3.ml.distance.ManhattanDistance;
 import org.deckfour.xes.model.XLog;
 import org.processmining.plugins.beepbeep.miner.processors.BetaCumulate;
 import org.processmining.plugins.beepbeep.miner.processors.BetaDistinctOccurences;
@@ -27,6 +29,7 @@ import org.processmining.plugins.beepbeep.miner.processors.BetaValueDistribution
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.peg.PointDistance;
 import ca.uqac.lif.cep.util.Numbers;
 
 public class PTMSettingModel
@@ -189,16 +192,17 @@ public class PTMSettingModel
 		switch (this.m_distance)
 		{
 		case "manhattanDistance":
-			distanceFunction = null;
+			distanceFunction = new PointDistance(new ManhattanDistance());
 			break;
 		case "euclidianDistance":
-			distanceFunction = null;
+			distanceFunction = new PointDistance(new EuclideanDistance());
 			break;
 		case "scalarDifference":
 			distanceFunction = Numbers.subtraction;
 			break;
 		case "ratio":
 		default:
+			distanceFunction = Numbers.division;
 			break;
 		}
 		return distanceFunction;
