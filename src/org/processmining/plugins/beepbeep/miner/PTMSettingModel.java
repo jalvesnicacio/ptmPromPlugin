@@ -1,6 +1,6 @@
 /*
- * A ProM plugin using BeepBeep palette for mining event traces Copyright (C)
- * 2017-2019 Sylvain Hallé and friends
+ * A ProM plugin using BeepBeep
+ * Copyright (C) 2020 Jalves Nicacio and friends
  * 
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.processmining.plugins.beepbeep.miner.models;
+package org.processmining.plugins.beepbeep.miner;
 
 import org.deckfour.xes.model.XLog;
 import org.processmining.plugins.beepbeep.miner.processors.BetaCumulate;
@@ -23,8 +23,8 @@ import org.processmining.plugins.beepbeep.miner.processors.BetaDistinctOccurence
 import org.processmining.plugins.beepbeep.miner.processors.BetaRunningAverage;
 import org.processmining.plugins.beepbeep.miner.processors.BetaRunningMoments;
 import org.processmining.plugins.beepbeep.miner.processors.BetaValueDistribution;
-import org.processmining.plugins.beepbeep.miner.processors.TrendProcessor;
 
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.util.Numbers;
@@ -157,9 +157,9 @@ public class PTMSettingModel
 		}
 	}
 
-	public TrendProcessor getTrendProcessor()
+	public Processor getTrendProcessor()
 	{
-		TrendProcessor tp = null;
+		Processor tp = null;
 		switch (this.m_trendReference.getTrendChoice())
 		{
 		case "cumulativeSum":
