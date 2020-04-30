@@ -15,15 +15,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.processmining.plugins.beepbeep.miner.functions;
-
-import java.util.Set;
+package ca.uqac.lif.cep.xes;
 
 import org.joda.time.DateTime;
 import org.joda.time.Hours;
 
-import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
  * this class calculates the duration of an event
@@ -31,46 +28,30 @@ import ca.uqac.lif.cep.functions.Function;
  * @author jalves
  *
  */
-public class TimeMinusFunction extends Function
+public class TimeMinusFunction extends BinaryFunction<DateTime,DateTime,Number>
 {
-
-	public Function duplicate(boolean arg0)
-	{
-		return new TimeMinusFunction();
-	}
-
 	/**
-	 * returns an integer representing the numbers of hours
+	 * A single visible instance of the function.
 	 */
-	public void evaluate(Object[] inputs, Object[] outputs, Context arg2)
+	public static final transient TimeMinusFunction instance = new TimeMinusFunction();
+	
+	/**
+	 * Creates a new instance of the function.
+	 */
+	protected TimeMinusFunction()
 	{
-		DateTime start, end;
-		start = (DateTime) inputs[0];
-		end = (DateTime) inputs[1];
-		outputs[0] = Hours.hoursBetween(start, end).getHours();
+		super(DateTime.class, DateTime.class, Number.class);
+	}
+	
+	@Override
+	public TimeMinusFunction duplicate(boolean with_state)
+	{
+		return this;
 	}
 
-	public int getInputArity()
+	@Override
+	public Number getValue(DateTime start, DateTime end)
 	{
-		return 2;
+		return Hours.hoursBetween(start, end).getHours();
 	}
-
-	public void getInputTypesFor(Set<Class<?>> s, int i)
-	{
-		if (i == 0 || i == 1)
-			s.add(DateTime.class);
-	}
-
-	public int getOutputArity()
-	{
-		return 1;
-	}
-
-	public Class<?> getOutputTypeFor(int i)
-	{
-		if (i == 0)
-			return Hours.class;
-		return null;
-	}
-
 }
