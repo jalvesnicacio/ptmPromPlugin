@@ -1,6 +1,6 @@
 /*
- * A ProM plugin using BeepBeep palette for mining event traces Copyright (C)
- * 2017-2019 Sylvain Hallé and friends
+ * A ProM plugin using BeepBeep
+ * Copyright (C) 2020 Jalves Nicacio and friends
  * 
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import org.processmining.framework.util.ui.widgets.ProMPropertiesPanel;
-import org.processmining.plugins.beepbeep.miner.models.PTMSettingModel;
+import org.processmining.plugins.beepbeep.miner.PTMSettingModel;
 
 public class SummaryPanel extends BeepBeepView
 {
