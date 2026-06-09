@@ -1,20 +1,24 @@
 <ivysettings>
-    <settings defaultResolver="default" />   
+    <settings defaultResolver="default" />
     <resolvers>
         <url name="prom">
-            <ivy pattern="https://svn.win.tue.nl/repos/[organisation]/Releases/Packages/[module]/[revision]/ivy.xml" />
-            <artifact pattern="https://svn.win.tue.nl/repos/[organisation]/Releases/Packages/[module]/[revision]/[artifact]-[revision].[ext]" />
+            <ivy pattern="https://raw.githubusercontent.com/promworkbench/Releases/main/Packages/[module]/[revision]/ivy.xml" />
+            <artifact pattern="https://raw.githubusercontent.com/promworkbench/Releases/main/Packages/[module]/[revision]/[artifact]-[revision].[ext]" />
         </url>
         <url name="prom-libs">
-            <ivy pattern="https://svn.win.tue.nl/repos/prom/Libraries/[module]/[revision]/ivy.xml" />
-            <artifact pattern="https://svn.win.tue.nl/repos/prom/Libraries/[module]/[revision]/[artifact]-[revision].[ext]" />
-            <artifact pattern="https://svn.win.tue.nl/repos/prom/Libraries/[module]/[revision]/[artifact]_[revision].[ext]" />
+            <ivy pattern="https://raw.githubusercontent.com/promworkbench/Releases/main/Libraries/[module]/[revision]/ivy.xml" />
+            <artifact pattern="https://raw.githubusercontent.com/promworkbench/Releases/main/Libraries/[module]/[revision]/[artifact]-[revision].[ext]" />
+            <artifact pattern="https://raw.githubusercontent.com/promworkbench/Releases/main/Libraries/[module]/[revision]/[artifact]_[revision].[ext]" />
+        </url>
+        <url name="github-release">
+            <artifact pattern="https://github.com/jalvesnicacio/ptmPromPlugin/releases/download/[revision]/[artifact].[ext]" />
         </url>
         <ibiblio name="maven2" m2compatible="true"/>
-        <chain name="default" returnFirst="true">  
-            <resolver ref="prom" />  
-            <resolver ref="prom-libs" />  
-            <resolver ref="maven2" />  
-        </chain>  
+        <chain name="default" returnFirst="true">
+            <resolver ref="prom" />
+            <resolver ref="prom-libs" />
+            <resolver ref="maven2" />
+            <resolver ref="github-release" />
+        </chain>
     </resolvers>
 </ivysettings>

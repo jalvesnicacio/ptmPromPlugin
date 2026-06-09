@@ -1,5 +1,6 @@
 <project name="Workshop" default="Compile Sources" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 	<!-- set global properties for this build -->
+	<property file="build.properties" />
 	<property environment="env" />
 	<property name="src" location="src" />
 	<property name="build" location="bindist" />

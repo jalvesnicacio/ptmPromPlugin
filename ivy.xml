@@ -11,5 +11,11 @@
     <dependencies defaultconf="default">
        <dependency org="prom" name="ProM-Plugins" rev="latest" changing="true" transitive="true" />
        <dependency org="prom" name="Log" rev="latest" changing="true" transitive="true" />
+       <dependency org="io.github.liflab" name="beepbeep-3" rev="0.10.8-alpha" />
+       <dependency org="org.apache.commons" name="commons-math3" rev="3.6.1" />
+       <dependency org="nz.ac.waikato.cms.weka" name="weka-stable" rev="3.8.6" />
+       <dependency org="liflab" name="pattheminer" rev="deps-v1">
+          <artifact name="pattheminer" type="jar" ext="jar" />
+       </dependency>
     </dependencies>
 </ivy-module>
