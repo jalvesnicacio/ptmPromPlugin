@@ -51,7 +51,7 @@ public class WindowsStep implements ProMWizardStep<PTMSettingModel>
 		if (component instanceof WindowsPanel)
 		{
 			WindowsPanel panel = (WindowsPanel) component;
-			if (model.getTrendReference().getDataMiningPattern().toString() == "SELF_CORRELATED")
+			if ("SELF_CORRELATED".equals(model.getTrendReference().getDataMiningPattern().toString()))
 			{
 				if (!(panel.getPastWindow() == 0))
 				{

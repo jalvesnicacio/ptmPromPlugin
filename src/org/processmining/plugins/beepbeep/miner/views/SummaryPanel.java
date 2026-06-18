@@ -43,7 +43,7 @@ public class SummaryPanel extends BeepBeepView
 		// Pattern and Windows:
 		String patternKind = model.getTrendReference().getDataMiningPattern().toString();
 
-		if (patternKind == "SELF_CORRELATED")
+		if ( "SELF_CORRELATED".equals(patternKind))
 		{
 			pattern = "Trend reference based on autocorrelated value";
 			windows += " Past Window: " + model.getPastWindow();

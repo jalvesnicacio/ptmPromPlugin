@@ -36,7 +36,7 @@ public class ReferenceTrend
 
 	public ReferenceTrend(String type, Number value)
 	{
-		if (type == "SELF_CORRELATED")
+		if ("SELF_CORRELATED".equals(type))
 		{
 			this.type = DataMiningPattern.SELF_CORRELATED;
 		}

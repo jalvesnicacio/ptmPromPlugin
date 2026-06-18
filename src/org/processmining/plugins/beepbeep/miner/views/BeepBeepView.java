@@ -145,7 +145,7 @@ public class BeepBeepView extends JPanel
 		label.setText(string);
 		label.setForeground(WidgetColors.PROPERTIES_BACKGROUND);
 
-		if (alignment == "left")
+		if ("left".equals(alignment))
 		{
 			label.setAlignmentX(Component.LEFT_ALIGNMENT);
 
