@@ -80,34 +80,27 @@ public class PatTheMinerPlugin extends BeepBeepPlugin
 		 */
 		ReferenceTrend pattern = settingsModel.getTrendReference();
 		int window = settingsModel.getPresentWindow();
-		Processor beta = new Beta(settingsModel.getElementTrendOption(),
-				settingsModel.getTrendProcessor());
-		Window windowProcessor = new Window(beta, window);
+		
 		Function delta = settingsModel.getDistanceFunction();
 		Float d = settingsModel.getThresholdValue();
 		BinaryFunction<Number, Number, Boolean> comp = settingsModel.getThresholdFunction();
 
-		// Create TrendDistance Processor
-		// TrendDistance<ReferenceTrend, Number, Number> td
-		// = new TrendDistance<ReferenceTrend, Number, Number>(
-		// pattern, // Reference trend
-		// window, // Window width
-		// beta, // beta-processor
-		// delta, // distance metric
-		// d, // distance threshold
-		// comp // comparison function
-		// );
-
-		TrendDistance<Number, Number, Number> td = new TrendDistance<Number, Number, Number>(
-				pattern.getValue(), // Reference trend
-				windowProcessor, // Window Processor
-				delta, // distance metric
-				d, // distance threshold
-				comp // comparison function
-				);
 
 		for (XTrace trc : traces)
 		{
+			Processor beta = new Beta(settingsModel.getElementTrendOption(),
+					settingsModel.getTrendProcessor());
+			
+			Window windowProcessor = new Window(beta, window);
+			
+			TrendDistance<Number, Number, Number> td = new TrendDistance<Number, Number, Number>(
+					pattern.getValue(), // Reference trend
+					windowProcessor, // Window Processor
+					delta, // distance metric
+					d, // distance threshold
+					comp // comparison function
+					);
+			
 			XTraceSource qs = new XTraceSource(trc);
 			Connector.connect(qs, td);
 			Pullable p = td.getPullableOutput();
