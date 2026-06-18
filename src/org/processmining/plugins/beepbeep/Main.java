@@ -33,10 +33,10 @@ public class Main
 			userAccessible = true)
 
 	@UITopiaVariant(affiliation = "UQAC",
-		author = "Laboratoire d'Informatique Formelle (LIF)", 
+		author = "Laboratoire d'Informatique Formelle (LIF/UQAC)", 
 		email = "shalle@uqac.ca")
 	
-	@PluginVariant(variantLabel = "Integration ProM - Beepbeep", 
+	@PluginVariant(variantLabel = "ProM - Beepbeep Integration", 
 		requiredParameterLabels = { 0 })
 	
 	public static BeepBeepResult main(UIPluginContext context, XLog log)

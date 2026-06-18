@@ -1,20 +1,24 @@
 <ivy-module version="2.0">
     <info organisation="prom" module="Workshop" revision="latest">
-    	<description>
-    		Version VERSION
-    	</description>
+        <description>
+            Version VERSION
+        </description>
     </info>
     <configurations>
-   		<conf name="default" extends="lib" />
-   		<conf name="lib" />
-	</configurations>  
+        <conf name="default" extends="lib" />
+        <conf name="lib" />
+    </configurations>  
     <dependencies defaultconf="default">
        <dependency org="prom" name="ProM-Plugins" rev="latest" changing="true" transitive="true" />
        <dependency org="prom" name="Log" rev="latest" changing="true" transitive="true" />
-       <dependency org="io.github.liflab" name="beepbeep-3" rev="0.10.8-alpha" />
+       
        <dependency org="org.apache.commons" name="commons-math3" rev="3.6.1" />
        <dependency org="nz.ac.waikato.cms.weka" name="weka-stable" rev="3.8.6" />
-       <dependency org="liflab" name="pattheminer" rev="deps-v1">
+
+       <dependency org="jalvesnicacio" name="beepbeep-3" rev="java8-deps">
+          <artifact name="beepbeep-3" type="jar" ext="jar" />
+       </dependency>
+       <dependency org="jalvesnicacio" name="pattheminer" rev="java8-deps">
           <artifact name="pattheminer" type="jar" ext="jar" />
        </dependency>
     </dependencies>

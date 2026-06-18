@@ -150,7 +150,7 @@ public class PTMSettingModel
 	public BinaryFunction<Number, Number, Boolean> getThresholdFunction()
 	{
 		// Numbers.isGreaterOrEqual
-		if (this.m_thresholdOption == "Smaller than")
+		if ("Smaller than".equals(this.m_thresholdOption))
 		{
 			return Numbers.isLessThan;
 		}

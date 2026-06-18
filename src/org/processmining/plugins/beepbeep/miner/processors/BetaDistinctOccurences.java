@@ -17,13 +17,34 @@
  */
 package org.processmining.plugins.beepbeep.miner.processors;
 
+
 import ca.uqac.lif.cep.GroupProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
+import ca.uqac.lif.cep.tmf.Passthrough;
+
+import ca.uqac.lif.cep.Connector;
 
 public class BetaDistinctOccurences extends GroupProcessor
 {
 	public BetaDistinctOccurences()
 	{
 		super(1, 1);
+		// Passthrough to receive attribute value (string)
+        Passthrough treatment = new Passthrough();
+        
+        // SymbolDistribution counts occurrences of each symbol.
+        // Result: Map<Object, Number> example: {NEW=3, FIN=2, RELEASE=1}
+        SymbolDistribution symbolDistribution = new SymbolDistribution();
+        
+        // Maps.Size extracts map size = number of distinct symbols
+        ApplyFunction size = new ApplyFunction(MapSize.instance);
+        
+        Connector.connect(treatment, symbolDistribution);
+        Connector.connect(symbolDistribution, size);
+        
+        addProcessors(treatment, symbolDistribution, size);
+        associateInput(0, treatment, 0);
+        associateOutput(0, size, 0);
 	}
 
 }
