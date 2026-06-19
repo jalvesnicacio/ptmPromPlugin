@@ -25,10 +25,13 @@ import org.processmining.plugins.beepbeep.miner.processors.BetaDistinctOccurence
 import org.processmining.plugins.beepbeep.miner.processors.BetaRunningAverage;
 import org.processmining.plugins.beepbeep.miner.processors.BetaRunningMoments;
 import org.processmining.plugins.beepbeep.miner.processors.BetaValueDistribution;
+import org.processmining.plugins.beepbeep.miner.processors.MapManhattanDistance;
+import org.processmining.plugins.beepbeep.miner.processors.MapToDistributionVector;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.peg.PointDistance;
 import ca.uqac.lif.cep.util.Numbers;
 
@@ -192,9 +195,15 @@ public class PTMSettingModel
 		switch (this.m_distance)
 		{
 		case "manhattanDistance":
-			distanceFunction = new PointDistance(new ManhattanDistance());
+			distanceFunction = MapManhattanDistance.instance;  // Map vs Map
+			//distanceFunction = new PointDistance(new ManhattanDistance());
 			break;
 		case "euclidianDistance":
+//			distanceFunction = new FunctionTree(
+//					new PointDistance(new EuclideanDistance()),
+//					MapToDistributionVector.instance,
+//					MapToDistributionVector.instance
+//				);
 			distanceFunction = new PointDistance(new EuclideanDistance());
 			break;
 		case "scalarDifference":

@@ -41,6 +41,7 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.peg.SelfCorrelatedTrendDistance;
 import ca.uqac.lif.cep.peg.TrendDistance;
 import ca.uqac.lif.cep.tmf.Window;
 import ca.uqac.lif.cep.xes.XTraceSource;
@@ -68,22 +69,19 @@ public class PatTheMinerPlugin extends BeepBeepPlugin
 	@Override
 	public BeepBeepResult process(XLog log)
 	{
-		// BeepBeepLogModel model = this.settingsModel.getLogModel();
 		List<XTrace> traces = new ArrayList<XTrace>();
-		traces.addAll(log);
-		MapResult result = new MapResult();
+	    traces.addAll(log);
+	    MapResult result = new MapResult();
 
-		/**
-		 * Set attributes of TrendDistance Processor: version 20.04: - DeltaFunction
-		 * does not yet work with ManhattanDistance and EuclidianDistance. Both
-		 * functions must receive a set of points.
-		 */
-		ReferenceTrend pattern = settingsModel.getTrendReference();
-		int window = settingsModel.getPresentWindow();
+	    ReferenceTrend pattern = settingsModel.getTrendReference();
+	    int pastWindow = settingsModel.getPastWindow();
+	    int presentWindow = settingsModel.getPresentWindow();
+	    Function delta = settingsModel.getDistanceFunction();
+	    Float d = settingsModel.getThresholdValue();
+	    BinaryFunction<Number, Number, Boolean> comp = settingsModel.getThresholdFunction();
+
 		
-		Function delta = settingsModel.getDistanceFunction();
-		Float d = settingsModel.getThresholdValue();
-		BinaryFunction<Number, Number, Boolean> comp = settingsModel.getThresholdFunction();
+		boolean selfCorrelated = pattern.getDataMiningPattern() == ReferenceTrend.DataMiningPattern.SELF_CORRELATED;
 
 
 		for (XTrace trc : traces)
@@ -91,38 +89,83 @@ public class PatTheMinerPlugin extends BeepBeepPlugin
 			Processor beta = new Beta(settingsModel.getElementTrendOption(),
 					settingsModel.getTrendProcessor());
 			
-			Window windowProcessor = new Window(beta, window);
+			Processor td;
+	        if (selfCorrelated)
+	        {
+	        	// Self-correlation: compares the trend over the past window against
+	            // the trend over the present window (e.g. Map vs Map for valueDistribution).
+	            // NOTE: with a non-null comparison function, this processor outputs the
+	            // raw distance (a Number), not a Boolean. The threshold check is applied
+	            // manually in the loop below.
+	            td = new SelfCorrelatedTrendDistance<Object, Object, Number>(
+	                    pastWindow, presentWindow, beta, delta, d, comp);
+	        }
+	        else
+	        {
+	        	// Pattern-based: compares the present trend against a fixed reference value.
+	            // TrendDistance always wires the comparison internally, so it outputs a Boolean.
+	            Window windowProcessor = new Window(beta, presentWindow);
+	            td = new TrendDistance<Number, Number, Number>(
+	                    pattern.getValue(),  	// Reference trend
+	                    windowProcessor, 		// Window Processor
+	                    delta, 					// distance metric
+	                    d, 						// distance threshold
+	                    comp					// comparison function
+	                    );
+	        }
 			
-			TrendDistance<Number, Number, Number> td = new TrendDistance<Number, Number, Number>(
-					pattern.getValue(), // Reference trend
-					windowProcessor, // Window Processor
-					delta, // distance metric
-					d, // distance threshold
-					comp // comparison function
-					);
 			
 			XTraceSource qs = new XTraceSource(trc);
 			Connector.connect(qs, td);
 			Pullable p = td.getPullableOutput();
-			// context.getProgress().setMaximum(log.size()); //Prom
 			int i = 0;
 
 			while (p.hasNext())
 			{
-				Boolean dvt = (Boolean) p.pull();
-				System.out.println("result " + i + ": " + dvt);
-				if (dvt == false)
-				{
-					ResultEntry entry = new ResultEntry(dvt);
-					result.put(entry);
+				Object out = p.pull();
+				boolean deviation;
 
-					// 2020-04-21: How can I save inputs and output from the WindowProcessor
-					// processor?
-				}
-				i++;
-				// context.getProgress().inc();
-			}
-		}
+				// Unify the two output shapes:
+	            // - TrendDistance (pattern-based) already returns the verdict as a Boolean.
+	            // - SelfCorrelatedTrendDistance returns the raw distance, so we apply the
+	            //   threshold comparison here. In both cases "true" means the distance is
+	            //   beyond the threshold, i.e. a trend deviation was detected.
+				if (out instanceof Boolean)
+	            {
+	                deviation = (Boolean) out;
+	            }
+	            else
+	            {
+	                double distance = ((Number) out).doubleValue();
+	                deviation = comp.getValue(distance, d);
+	            }
+
+	            System.out.println("result " + i + ": deviation=" + deviation);
+	            
+	            // Record only the traces that deviate. This fixes the original "== false"
+	            // logic, which mistakenly stored the non-deviating cases instead.
+	            if (deviation)
+	            {
+	                ResultEntry entry = new ResultEntry(deviation);
+	                result.put(entry);
+	            }
+	            i++;
+				
+				//=========== Old version =========
+//				Boolean dvt = (Boolean) p.pull();
+//				System.out.println("result " + i + ": " + dvt);
+//				if (dvt == false)
+//				{
+//					ResultEntry entry = new ResultEntry(dvt);
+//					result.put(entry);
+//
+//					// 2020-04-21: How can I save inputs and output from the WindowProcessor
+//					// processor?
+//				}
+//				i++;
+//				// context.getProgress().inc();
+			} 
+		} 
 		return result;
 	}
 
