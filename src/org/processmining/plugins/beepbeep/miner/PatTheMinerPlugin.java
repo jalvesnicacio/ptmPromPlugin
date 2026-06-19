@@ -29,6 +29,7 @@ import org.processmining.plugins.beepbeep.BeepBeepPlugin;
 import org.processmining.plugins.beepbeep.BeepBeepResult;
 import org.processmining.plugins.beepbeep.miner.MapResult.ResultEntry;
 import org.processmining.plugins.beepbeep.miner.processors.Beta;
+import org.processmining.plugins.beepbeep.miner.processors.MapManhattanDistance;
 import org.processmining.plugins.beepbeep.miner.views.DistanceStep;
 import org.processmining.plugins.beepbeep.miner.views.PatternStep;
 import org.processmining.plugins.beepbeep.miner.views.SummaryStep;
@@ -49,7 +50,7 @@ import ca.uqac.lif.cep.xes.XTraceSource;
 /**
  * Mining plug-in that mines an event log for a workshop model.
  * 
- * @author jalvesnicacio
+ * @author Jalves Nicacio
  * 
  */
 
@@ -83,7 +84,7 @@ public class PatTheMinerPlugin extends BeepBeepPlugin
 		
 		boolean selfCorrelated = pattern.getDataMiningPattern() == ReferenceTrend.DataMiningPattern.SELF_CORRELATED;
 
-
+		int traceIndex = 0;
 		for (XTrace trc : traces)
 		{
 			Processor beta = new Beta(settingsModel.getElementTrendOption(),
@@ -124,6 +125,9 @@ public class PatTheMinerPlugin extends BeepBeepPlugin
 			{
 				Object out = p.pull();
 				boolean deviation;
+				Double distance = null;
+		        String refTrend = "";
+		        String compTrend = "";
 
 				// Unify the two output shapes:
 	            // - TrendDistance (pattern-based) already returns the verdict as a Boolean.
@@ -133,11 +137,18 @@ public class PatTheMinerPlugin extends BeepBeepPlugin
 				if (out instanceof Boolean)
 	            {
 	                deviation = (Boolean) out;
+	                refTrend = String.valueOf(pattern.getValue());  // valor fixo
 	            }
 	            else
 	            {
-	                double distance = ((Number) out).doubleValue();
+	                distance = ((Number) out).doubleValue();
 	                deviation = comp.getValue(distance, d);
+	                if (delta instanceof MapManhattanDistance)
+	                {
+	                    MapManhattanDistance mmd = (MapManhattanDistance) delta;
+	                    refTrend  = String.valueOf(mmd.getLastReference());
+	                    compTrend = String.valueOf(mmd.getLastComputed());
+	                }
 	            }
 
 	            System.out.println("result " + i + ": deviation=" + deviation);
@@ -146,7 +157,7 @@ public class PatTheMinerPlugin extends BeepBeepPlugin
 	            // logic, which mistakenly stored the non-deviating cases instead.
 	            if (deviation)
 	            {
-	                ResultEntry entry = new ResultEntry(deviation);
+	                ResultEntry entry = new ResultEntry(traceIndex, refTrend, compTrend, distance, deviation);
 	                result.put(entry);
 	            }
 	            i++;
@@ -164,7 +175,8 @@ public class PatTheMinerPlugin extends BeepBeepPlugin
 //				}
 //				i++;
 //				// context.getProgress().inc();
-			} 
+			}
+			traceIndex++;
 		} 
 		return result;
 	}

@@ -39,11 +39,16 @@ public class MapManhattanDistance extends BinaryFunction<Map, Map, Number>
 {
 	public static final MapManhattanDistance instance = new MapManhattanDistance();
 	private ManhattanDistance manhattan = new ManhattanDistance();
+	private Map lastComputed;   // present window
+	private Map lastReference;  // past window
 
 	public MapManhattanDistance()
 	{
 		super(Map.class, Map.class, Number.class);
 	}
+	
+	public Map getLastReference() { return lastReference; }
+	public Map getLastComputed()  { return lastComputed; }
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -57,6 +62,8 @@ public class MapManhattanDistance extends BinaryFunction<Map, Map, Number>
 	    System.out.println("map2 value: " + map2);
 	    System.out.println("===================================");
 	    // --- end DEBUG ---
+	    this.lastComputed = map1;    // in0 = present (trimmed branch)
+	    this.lastReference = map2;   // in1 = past (reference)
 		
 		// Build the shared, ordered key space (union of both maps' keys)
 		TreeSet<String> keys = new TreeSet<String>();

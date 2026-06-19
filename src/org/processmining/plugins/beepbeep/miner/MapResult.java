@@ -1,10 +1,8 @@
 package org.processmining.plugins.beepbeep.miner;
 
-import java.util.ArrayList;
+
 import java.util.Map;
 import java.util.TreeMap;
-
-import org.deckfour.xes.model.XEvent;
 import org.processmining.plugins.beepbeep.BeepBeepResult;
 
 public class MapResult extends BeepBeepResult
@@ -43,31 +41,57 @@ public class MapResult extends BeepBeepResult
 		{
 			buffer.append("<html>");
 		}
-		buffer.append("<table border='1'>");
-		buffer.append("<tr><th colspan='3'>Results</th></tr>");
-		buffer.append("<tr><th>Deviation Result</th><th>Event</th><th>Computing Trend</th></tr>");
+		buffer.append("<table border='1' cellpadding='4' cellspacing='0' width='100%'>");
 
+	    // Title row
+		buffer.append("<tr bgcolor='#2c3e50'>");
+	    buffer.append("<th colspan='5'><font color='#ffffff'>Trend Deviation Results</font></th>");
+	    buffer.append("</tr>");
+
+	    // Header row
+	    buffer.append("<tr bgcolor='#dddddd'>");
+	    buffer.append("<th>Trace</th>");
+	    buffer.append("<th>Reference Trend</th>");
+	    buffer.append("<th>Computed Trend</th>");
+	    buffer.append("<th>Distance</th>");
+	    buffer.append("<th>Deviation</th>");
+	    buffer.append("</tr>");
+
+	    // Data rows
+	    boolean shade = false;
 		for (Map.Entry<Integer,ResultEntry> m : m_results.entrySet())
 		{
 			ResultEntry rentry = m.getValue();
-			Object result = rentry.getM_result();
-			ArrayList<XEvent> events = rentry.getM_eventsOfEntry();
-			buffer.append("<tr><td>");
-			buffer.append(result.toString());
-			buffer.append("</td></tr>");
-			for (XEvent evt : events)
-			{
-				buffer.append("<tr><td>");
-				buffer.append(evt.toString());
-				buffer.append("</td></tr>");
-			}
+
+	        // Alternate row background for readability
+	        buffer.append(shade ? "<tr bgcolor='#f5f5f5'>" : "<tr>");
+	        shade = !shade;
+
+	        buffer.append("<td align='center'>").append(rentry.getTraceIndex()).append("</td>");
+	        buffer.append("<td>").append(rentry.getReferenceTrend()).append("</td>");
+	        buffer.append("<td>").append(rentry.getComputedTrend()).append("</td>");
+
+	        // Distance: may be null in pattern-based mode
+	        Double dist = rentry.getDistance();
+	        buffer.append("<td align='right'>");
+	        buffer.append(dist != null ? String.format("%.2f", dist) : "&mdash;");
+	        buffer.append("</td>");
+
+	        // Deviation flag, highlighted
+	        buffer.append("<td align='center'><font color='#c0392b'><b>");
+	        buffer.append(rentry.isDeviation());
+	        buffer.append("</b></font></td>");
+
+	        buffer.append("</tr>");
 
 		}
+		
 		buffer.append("</table>");
 		if (includeHTMLTags)
 		{
 			buffer.append("</html>");
 		}
+		
 		return buffer.toString();
 	}
 
@@ -75,38 +99,73 @@ public class MapResult extends BeepBeepResult
 	 * A class to associate each TrendDistance output with the input windows in the
 	 * Window processor that runs Beta.
 	 * 
-	 * @author jalves
+	 * @author Jalves Nicacio
 	 *
 	 */
 	public static class ResultEntry
 	{
-		private Object m_result;
-		private ArrayList<XEvent> m_eventsOfEntry = new ArrayList<XEvent>();
+		
+		private int traceIndex;
+	    private String referenceTrend;
+	    private String computedTrend;
+	    private Double distance;     // null no pattern-based
+	    private boolean deviation;
 
-		public ResultEntry(Object result)
+		
+		
+	    public ResultEntry(int traceIndex, String referenceTrend, String computedTrend, Double distance, boolean deviation)
 		{
-			this.m_result = result;
+			 this.traceIndex = traceIndex;
+			 this.referenceTrend = referenceTrend;
+			 this.computedTrend = computedTrend;
+			 this.distance = distance;
+			 this.deviation = deviation;
 		}
 
-		public Object getM_result()
-		{
-			return m_result;
+		public int getTraceIndex() {
+			return traceIndex;
 		}
+		
+		public void setTraceIndex(int traceIndex)
+	    {
+	        this.traceIndex = traceIndex;
+	    }
 
-		public void setM_result(Object m_result)
-		{
-			this.m_result = m_result;
+		public String getReferenceTrend() {
+			return referenceTrend;
 		}
+		
+		public void setReferenceTrend(String referenceTrend)
+	    {
+	        this.referenceTrend = referenceTrend;
+	    }
 
-		public ArrayList<XEvent> getM_eventsOfEntry()
-		{
-			return m_eventsOfEntry;
+		public String getComputedTrend() {
+			return computedTrend;
 		}
+		
+		public void setComputedTrend(String computedTrend)
+	    {
+	        this.computedTrend = computedTrend;
+	    }
 
-		public void setM_eventsOfEntry(ArrayList<XEvent> m_eventsOfEntry)
-		{
-			this.m_eventsOfEntry = m_eventsOfEntry;
+		public Double getDistance() {
+			return distance;
 		}
+		
+		public void setDistance(Double distance)
+	    {
+	        this.distance = distance;
+	    }
+
+		public boolean isDeviation() {
+			return deviation;
+		}
+		
+		public void setDeviation(boolean deviation)
+	    {
+	        this.deviation = deviation;
+	    }
 
 	}
 }
