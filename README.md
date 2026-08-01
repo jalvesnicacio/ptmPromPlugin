@@ -63,4 +63,4 @@ Sample event logs in XES format are available at
 
 - [BeepBeep 3](https://github.com/liflab/beepbeep-3)
 - [PatTheMiner](https://github.com/liflab/PatTheMiner)
-- [ProM Framework](http://www.promtools.org)
+- [ProM Framework](https://www.promtools.org)
