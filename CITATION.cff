@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata from this file."
+title: "PtmProMPlugin"
+abstract: >-
+  A ProM plugin for trend deviation detection in event logs, built on top of
+  the BeepBeep event stream processing library and its PatTheMiner palette.
+  Given an event log in XES format, the plugin detects when traces deviate
+  from an expected behavior trend, using configurable trend functions,
+  distance metrics, and thresholds accessible through a step-by-step wizard.
+type: software
+authors:
+  - given-names: Jalves
+    family-names: Nicacio
+    affiliation: "Instituto Federal de Educação, Ciência e Tecnologia de Alagoas, Maceió, Brazil"
+    orcid: "https://orcid.org/0000-0003-4488-324X"
+  - given-names: Sylvain
+    family-names: Hallé
+    affiliation: "Université du Québec à Chicoutimi, Canada"
+    orcid: "https://orcid.org/0000-0002-4406-6154"
+repository-code: "https://github.com/jalvesnicacio/ptmPromPlugin"
+license: LGPL-3.0-or-later
+version: "1.0.0"
+date-released: "2026-08-05"
+# doi: "10.5281/zenodo.XXXXXXX"   
+keywords:
+  - process mining
+  - ProM
+  - BeepBeep
+  - event stream processing
+  - trend deviation detection
+  - conformance checking
+preferred-citation:
+  type: conference-paper
+  title: "From Event Log Abstraction to Workflow Abstraction: A BeepBeep-Based Extension for ProM"
+  authors:
+    - given-names: Jalves
+      family-names: Nicacio
+      affiliation: "Instituto Federal de Educação, Ciência e Tecnologia de Alagoas, Maceió, Brazil"
+    - given-names: Sylvain
+      family-names: Hallé
+      affiliation: "Université du Québec à Chicoutimi, Canada"
+  collection-title: "Proceedings of the 30th International Conference on Enterprise Design, Operations, and Computing (EDOC 2026)"
+  year: 2026
+  # doi: "10.XXXX/XXXXXXX"   # <- paste the paper DOI here once available
