@@ -1,5 +1,8 @@
 # PtmPromPlugin
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21815061.svg)](https://doi.org/10.5281/zenodo.21815061)
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+
 A ProM plugin for trend deviation detection in event logs, built on top
 of the [BeepBeep](http://liflab.github.io/beepbeep-3/) event stream
 processing library and its

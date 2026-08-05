@@ -21,7 +21,7 @@ repository-code: "https://github.com/jalvesnicacio/ptmPromPlugin"
 license: LGPL-3.0-or-later
 version: "1.0.0"
 date-released: "2026-08-05"
-doi: "10.5281/zenodo.21815062"   
+doi: "10.5281/zenodo.21815061"   
 keywords:
   - process mining
   - ProM
